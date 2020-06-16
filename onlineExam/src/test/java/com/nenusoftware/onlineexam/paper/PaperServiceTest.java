@@ -27,9 +27,11 @@ public class PaperServiceTest {
 
     @Test
     public void testAddPaper() throws Exception {
+        String paperName = "增加试卷";
         Paper paper = new Paper();
-        paper.setPaperName("测试增加试卷");
+        paper.setPaperName(paperName);
         paperService.addPaper(paper);
+        System.out.println(paperService.queryPaperIdByName(paperName).getPaperId());
     }
 
     @Test
@@ -57,4 +59,9 @@ public class PaperServiceTest {
         System.out.println(paperService.queryPaperNameById(paperId).getPaperName());
     }
 
+    @Test
+    public void testQueryPaperIdByName() throws Exception{
+        String paperName = "2018年秋季学期17级JavaEE期末考试题";
+        System.out.println(paperService.queryPaperIdByName(paperName).getPaperId());
+    }
 }

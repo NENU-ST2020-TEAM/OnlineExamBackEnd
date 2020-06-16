@@ -44,4 +44,9 @@
         WHERE `paperId` LIKE #{paperId}
     </select>
 
+    <select id="queryPaperIdByName" resultMap="Paper">
+        SELECT paperId
+        FROM t_paper
+        WHERE `paperName` LIKE #{paperName}
+    </select>
 </mapper>

@@ -5,7 +5,7 @@ import com.nenusoftware.onlineexam.entity.paper.Paper;
 import java.util.List;
 
 /**
- * @Author:Liangll
+ * @Author: Liangll
  * @Description: PaperService的接口层
  * @Date: 10:52 2019/5/3
  */
@@ -13,7 +13,7 @@ public interface PaperService {
 
     /**
      * 列出所有试卷
-     * @return 返回List形式的试卷信息
+     * @return 返回 List形式的试卷信息
      * @throws Exception
      */
     public List<Paper> listAllPaper() throws Exception;
@@ -21,7 +21,7 @@ public interface PaperService {
     /**
      * 增加试卷
      * @param paper 试卷实体
-     * @return 增加成功返回true，增加失败返回false
+     * @return 增加成功返回 true，增加失败返回 false
      * @throws Exception
      */
     public boolean addPaper(Paper paper) throws Exception;
@@ -29,7 +29,7 @@ public interface PaperService {
     /**
      * 删除试卷
      * @param paperId 试卷编号
-     * @return 删除成功返回true，删除失败返回false
+     * @return 删除成功返回 true，删除失败返回 false
      * @throws Exception
      */
     public boolean deletePaper(int paperId) throws Exception;
@@ -37,7 +37,7 @@ public interface PaperService {
     /**
      * 修改试卷
      * @param paper 试卷实体
-     * @return 修改成功返回true，修改失败返回false
+     * @return 修改成功返回 true，修改失败返回 false
      * @throws Exception
      */
     public boolean updatePaper(Paper paper) throws Exception;
@@ -45,7 +45,7 @@ public interface PaperService {
     /**
      * 模糊查询（查询试卷名称）
      * @param keyWord 输入查询的关键字
-     * @return 返回List形式的试卷信息
+     * @return 返回 List形式的试卷信息
      * @throws Exception
      */
     public List<Paper> queryPaperName(String keyWord) throws Exception;
@@ -53,9 +53,17 @@ public interface PaperService {
     /**
      * 根据Id查询试卷名称
      * @param paperId 试卷编号
-     * @return 返回Paper形式的试卷信息
+     * @return 返回 Paper形式的试卷信息
      * @throws Exception
      */
     public Paper queryPaperNameById(int paperId) throws Exception;
+
+    /**
+     * 根据试卷名称查询试卷编号
+     * @param paperName 试卷名称
+     * @return 返回 Paper形式的试卷信息
+     * @throws Exception
+     */
+    public Paper queryPaperIdByName(String paperName) throws Exception;
 
 }

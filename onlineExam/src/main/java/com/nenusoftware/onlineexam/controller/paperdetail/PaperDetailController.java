@@ -25,8 +25,8 @@ public class PaperDetailController {
     PaperDetailService paperDetailService;
 
     /**
-     * 列出所有试卷详细信息
-     * @return 返回List形式的试卷详细信息
+     * 列出试题库所有试题详细信息
+     * @return 返回 List形式的试卷详细信息
      */
     @ResponseBody
     @RequestMapping("/listAllPaperDetail")
@@ -60,15 +60,15 @@ public class PaperDetailController {
     }
 
     /**
-     * 增加试卷详细信息
+     * 增加试卷试题详细信息
      * @param paperIdStr 试卷编号
-     * @param exerciseTypeStr 题目类型
-     * @param exerciseIdStr 题目Id
+     * @param exerciseTypeStr 题目类型(0:选择题，1：判断题，2：填空题：3：主观题 )
+     * @param exerciseIdStr 题目序号
      * @param contentStr 题目内容
-     * @param typeAStr 选项A
-     * @param typeBStr 选项B
-     * @param typeCStr 选项C
-     * @param typeDStr 选项D
+     * @param typeAStr 选项 A
+     * @param typeBStr 选项 B
+     * @param typeCStr 选项 C
+     * @param typeDStr 选项 D
      * @param answerStr 题目答案
      * @param scoreStr 题目分值
      * @throws Exception
@@ -76,34 +76,33 @@ public class PaperDetailController {
     @ResponseBody
     @RequestMapping("/addPaperDetail")
         public void addPaperDetail(String paperIdStr, String exerciseTypeStr, String exerciseIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String scoreStr) throws Exception{
-
         PaperDetail paperDetail = new PaperDetail();
 
-        int score = Integer.parseInt(scoreStr);
-        int exerciseType = Integer.parseInt(exerciseTypeStr);
         int paperId = Integer.parseInt(paperIdStr);
+        int exerciseType = Integer.parseInt(exerciseTypeStr);
         int exerciseId = Integer.parseInt(exerciseIdStr);
+        int score = Integer.parseInt(scoreStr);
 
+        paperDetail.setContent(contentStr);
         paperDetail.setPaperId(paperId);
         paperDetail.setExerciseId(exerciseId);
-        paperDetail.setContent(contentStr);
 
         if(exerciseType == 0){
             paperDetail.setTypeA(typeAStr);
             paperDetail.setTypeB(typeBStr);
             paperDetail.setTypeC(typeCStr);
             paperDetail.setTypeD(typeDStr);
-            paperDetail.setExerciseType("单选题");
+            paperDetail.setExerciseType("选择题");
         }else if(exerciseType == 1){
             paperDetail.setTypeA(typeAStr);
             paperDetail.setTypeB(typeBStr);
-            paperDetail.setTypeC(typeCStr);
-            paperDetail.setTypeD(typeDStr);
-            paperDetail.setExerciseType("多选题");
-        }else{
-            paperDetail.setTypeA(typeAStr);
-            paperDetail.setTypeB(typeBStr);
             paperDetail.setExerciseType("判断题");
+        }else if(exerciseType == 2){
+            paperDetail.setTypeA(typeAStr);
+            paperDetail.setExerciseType("填空题");
+        }else if(exerciseType == 3){
+            paperDetail.setTypeA(typeAStr);
+            paperDetail.setExerciseType("主观题");
         }
 
         paperDetail.setAnswer(answerStr);

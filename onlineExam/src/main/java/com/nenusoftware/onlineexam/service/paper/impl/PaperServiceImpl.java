@@ -94,4 +94,15 @@ public class PaperServiceImpl implements PaperService {
         return paperMapper.queryPaperNameById(paperId);
     }
 
+    /**
+     * 根据试卷名称查询试卷编号
+     * @param paperName 试卷名称
+     * @return 返回 Paper形式的试卷信息
+     * @throws Exception
+     */
+    @Override
+    public Paper queryPaperIdByName(String paperName) throws Exception{
+        return paperMapper.queryPaperIdByName(paperName);
+    }
+
 }

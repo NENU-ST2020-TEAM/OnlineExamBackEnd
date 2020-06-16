@@ -45,15 +45,18 @@ public class PaperController {
      */
     @ResponseBody
     @RequestMapping("/addPaper")
-    public void addPaper(String paperName){
+    public int addPaper(String paperName){
+        int paperId = 0;
         try {
             Paper paper = new Paper();
             paper.setPaperName(paperName);
             paperService.addPaper(paper);
+            paperId = paperService.queryPaperIdByName(paperName).getPaperId();
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("增加试卷失败！");
         }
+        return paperId;
     }
 
     /**

@@ -63,4 +63,12 @@ public interface PaperMapper {
      */
     public Paper queryPaperNameById(@Param("paperId") int paperId) throws Exception;
 
+    /**
+     * 根据试卷名称查询试卷编号
+     * @param paperName 试卷名称
+     * @return 返回 Paper形式的试卷信息
+     * @throws Exception
+     */
+    public Paper queryPaperIdByName(@Param("paperName") String paperName) throws Exception;
+
 }

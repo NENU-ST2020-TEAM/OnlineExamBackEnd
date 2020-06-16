@@ -20,29 +20,41 @@ public class PaperDetailServiceTest {
     @Autowired
     PaperDetailService paperDetailService;
 
+    /**
+     * 列出试题库所有试题详细信息
+     * @throws Exception
+     */
     @Test
     public void testListAllPaperDetail() throws Exception{
         System.out.println(paperDetailService.listAllPaperDetail());
     }
 
+    /**
+     * 根据试卷编号列出试题详细信息
+     * @throws Exception
+     */
     @Test
     public void testListPaperDetailByPaperId() throws Exception{
         int paperId = 2;
         System.out.println(paperDetailService.listPaperDetailByPaperId(paperId));
     }
 
+    /**
+     * 增加试卷试题详细信息
+     * @throws Exception
+     */
     @Test
     public void testAddPaperDetail() throws Exception {
         PaperDetail paperDetail = new PaperDetail();
-//        paperDetail.setPaperDetailId(2);
 
+//        paperDetail.setPaperDetailId(2);
         paperDetail.setPaperId(2);
         paperDetail.setExerciseId(1);
-        paperDetail.setContent("测试增加题目内容");
+        paperDetail.setContent("增加题目内容");
         paperDetail.setTypeA("测试A");
-        paperDetail.setTypeB("测试B");
-        paperDetail.setTypeC("测试C");
-        paperDetail.setTypeD("测试D");
+        paperDetail.setTypeB(null);
+        paperDetail.setTypeC(null);
+        paperDetail.setTypeD(null);
         paperDetail.setAnswer("测试增加正确答案");
         paperDetail.setExerciseType("测试增加题目内容");
         paperDetail.setScore(120);
