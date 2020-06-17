@@ -1,7 +1,9 @@
 package com.nenusoftware.onlineexam.controller.paperdetail;
 
+import com.alibaba.fastjson.JSONArray;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,9 +63,7 @@ public class PaperDetailController {
 
     /**
      * 增加试卷试题详细信息
-     * @param paperIdStr 试卷编号
      * @param exerciseTypeStr 题目类型(0:选择题，1：判断题，2：填空题：3：主观题 )
-     * @param exerciseIdStr 题目序号
      * @param contentStr 题目内容
      * @param typeAStr 选项 A
      * @param typeBStr 选项 B
@@ -75,18 +75,13 @@ public class PaperDetailController {
      */
     @ResponseBody
     @RequestMapping("/addPaperDetail")
-        public void addPaperDetail(String paperIdStr, String exerciseTypeStr, String exerciseIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String scoreStr) throws Exception{
+    public void addPaperDetail(String exerciseTypeStr,String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String answer2, String answer3, String scoreStr) throws Exception{
         PaperDetail paperDetail = new PaperDetail();
-
-        int paperId = Integer.parseInt(paperIdStr);
         int exerciseType = Integer.parseInt(exerciseTypeStr);
-        int exerciseId = Integer.parseInt(exerciseIdStr);
+        //int exerciseId = Integer.parseInt(exerciseIdStr);
         int score = Integer.parseInt(scoreStr);
-
         paperDetail.setContent(contentStr);
-        paperDetail.setPaperId(paperId);
-        paperDetail.setExerciseId(exerciseId);
-
+        //paperDetail.setExerciseId(exerciseId);
         if(exerciseType == 0){
             paperDetail.setTypeA(typeAStr);
             paperDetail.setTypeB(typeBStr);
@@ -102,12 +97,12 @@ public class PaperDetailController {
             paperDetail.setExerciseType("填空题");
         }else if(exerciseType == 3){
             paperDetail.setTypeA(typeAStr);
-            paperDetail.setExerciseType("主观题");
+            paperDetail.setExerciseType("简答题");
         }
-
         paperDetail.setAnswer(answerStr);
+        paperDetail.setAnswer2(answer2);
+        paperDetail.setAnswer3(answer3);
         paperDetail.setScore(score);
-
         paperDetailService.addPaperDetail(paperDetail);
     }
 
@@ -130,8 +125,6 @@ public class PaperDetailController {
     /**
      * 修改试卷详细信息
      * @param paperDetailIdStr 试卷详细信息编号
-     * @param paperIdStr 试卷编号
-     * @param exerciseIdStr 题目编号
      * @param contentStr 题目内容
      * @param typeAStr 选项A
      * @param typeBStr 选项B
@@ -142,16 +135,16 @@ public class PaperDetailController {
      */
     @ResponseBody
     @RequestMapping("/updatePaperDetail")
-    public void updatePaperDetail(String paperDetailIdStr, String paperIdStr, String exerciseIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String scoreStr){
+    public void updatePaperDetail(String paperDetailIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String scoreStr){
         int paperDetailId = Integer.parseInt(paperDetailIdStr);
-        int paperId = Integer.parseInt(paperIdStr);
-        int exerciseId = Integer.parseInt(exerciseIdStr);
+//        int paperId = Integer.parseInt(paperIdStr);
+//        int exerciseId = Integer.parseInt(exerciseIdStr);
         int score = Integer.parseInt(scoreStr);
         try {
             PaperDetail paperDetail = new PaperDetail();
 
-            paperDetail.setPaperId(paperId);
-            paperDetail.setExerciseId(exerciseId);
+//            paperDetail.setPaperId(paperId);
+//            paperDetail.setExerciseId(exerciseId);
             paperDetail.setContent(contentStr);
             paperDetail.setTypeA(typeAStr);
             paperDetail.setTypeB(typeBStr);
@@ -159,7 +152,6 @@ public class PaperDetailController {
             paperDetail.setTypeD(typeDStr);
             paperDetail.setAnswer(answerStr);
             paperDetail.setScore(score);
-
             paperDetailService.deletePaperDetail(paperDetailId);
         }catch (Exception e){
             e.printStackTrace();
@@ -194,5 +186,30 @@ public class PaperDetailController {
             e.printStackTrace();
             System.out.println("根据题目类型列出题目信息失败!");
         }
+    }
+
+    /**
+     * 前端传回做题信息，进行判分，并将错误的题目存入错题集中
+     * @param jsonString
+     * @param userIdStr
+     * @param paperIdStr
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/judgeQuestion")
+    public int judgeQuestion(String jsonString, String userIdStr, String paperIdStr){
+        int result = 0;
+        //String jsonString = "[{\"answer\":\"后置双摄\",\"paperDetailId\":\"24\"}, {\"answer\":\"A\",\"paperDetailId\":\"11\"},{\"answer\":\"错\",\"paperDetailId\":\"3\"}]";
+        try{
+            int userId = Integer.parseInt(userIdStr);
+            int paperId = Integer.parseInt(paperIdStr);
+            JSONArray jsonArray = JSONArray.parseArray(jsonString);
+            result = paperDetailService.judgeQuestion(jsonArray, userId, paperId);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("得出成绩失败");
+        }
+        return result;
     }
 }

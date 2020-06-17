@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -96,6 +97,44 @@ public class ScoreController {
         List<Score> scoreList = null;
         try {
             scoreList = scoreService.queryScoreByUser(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return scoreList;
+    }
+
+    /**
+     * 列出该试卷60分及以上的分数
+     * @param paperIdStr
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/listScoreByMark1")
+    public List<Score> listScoreByMark1(String paperIdStr) throws Exception{
+        List<Score> scoreList = Collections.emptyList();
+        int paperId = Integer.parseInt(paperIdStr);
+        try {
+            scoreList = scoreService.listScoreByMark1(paperId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return scoreList;
+    }
+
+    /**
+     * 列出该试卷60分及以下的分数
+     * @param paperIdStr
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping("/listScoreByMark2")
+    public List<Score> listScoreByMark2(String paperIdStr) throws Exception{
+        List<Score> scoreList = Collections.emptyList();
+        int paperId = Integer.parseInt(paperIdStr);
+        try {
+            scoreList = scoreService.listScoreByMark2(paperId);
         }catch (Exception e){
             e.printStackTrace();
         }

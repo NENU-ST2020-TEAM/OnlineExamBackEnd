@@ -32,10 +32,10 @@
         (#{user.userId}, #{user.username}, #{user.password}, #{user.birthday}, #{user.sex}, #{user.power}, #{user.image})
     </insert>
 
-    <delete id="deleteUser">
-        DELETE FROM t_user
-        WHERE userId = #{userId}
-    </delete>
+<!--    <delete id="deleteUser">-->
+<!--        DELETE FROM t_user-->
+<!--        WHERE userId = #{userId}-->
+<!--    </delete>-->
 
     <update id="updateUser">
         update t_user
@@ -43,11 +43,11 @@
         WHERE userId = #{user.userId}
     </update>
 
-    <update id="updatePower">
-        update t_user
-        set power = 1
-        WHERE userId = #{userId}
-    </update>
+<!--    <update id="updatePower">-->
+<!--        update t_user-->
+<!--        set power = 1-->
+<!--        WHERE userId = #{userId}-->
+<!--    </update>-->
 
     <select id="querytByName" resultMap="User">
         SELECT *

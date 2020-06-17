@@ -79,4 +79,6 @@ public interface PaperDetailMapper {
      */
     public List<PaperDetail> queryExerciseItemsById(@Param("paperDetailId") int paperDetailId) throws Exception;
 
+    public List<PaperDetail> queryQuestion(@Param("paperDetailId") int paperDetailId) throws Exception;
+
 }

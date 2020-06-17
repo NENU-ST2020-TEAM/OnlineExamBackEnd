@@ -1,6 +1,8 @@
 package com.nenusoftware.onlineexam.service.paperdetail;
 
+import com.alibaba.fastjson.JSONArray;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -73,5 +75,15 @@ public interface PaperDetailService {
      * @throws Exception
      */
     public List<PaperDetail> queryExerciseItemsById(int paperDetailId) throws Exception;
+
+    /**
+     * 根据题目id查找某道题的答案以及分值
+     * @param paperDetailId
+     * @return
+     * @throws Exception
+     */
+    public PaperDetail queryQuestion(int paperDetailId) throws Exception;
+
+    public int judgeQuestion(JSONArray jsonArray, int userId, int paperId) throws Exception;
 
 }

@@ -43,4 +43,8 @@ public interface ScoreService {
      */
     public List<Score> queryScoreByPaper(int paperId) throws Exception;
 
+    public List<Score> listScoreByMark1(int paperId) throws Exception;
+
+    public List<Score> listScoreByMark2(int paperId) throws Exception;
+
 }

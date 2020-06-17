@@ -49,4 +49,15 @@ public class ScoreServiceTest {
         System.out.println(scoreService.queryScoreByPaper(paperId));
     }
 
+    @Test
+    public void testlistScoreByMark1() throws Exception{
+        int paperId = 1;
+        System.out.println(scoreService.listScoreByMark1(paperId));
+    }
+
+    @Test
+    public void testlistScoreByMark2() throws Exception{
+        int paperId = 1;
+        System.out.println(scoreService.listScoreByMark2(paperId));
+    }
 }

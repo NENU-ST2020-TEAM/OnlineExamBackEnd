@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import sun.reflect.annotation.ExceptionProxy;
 
 
 /**
@@ -26,21 +27,25 @@ public class AnswerServiceTest {
         System.out.println(answerService.listAllAnswer());
     }
 
-    @Test
-    public void testAddAnswer() throws Exception {
-        Answer answer = new Answer();
+//    @Test
+//    public void testAddAnswer() throws Exception {
+//        Answer answer = new Answer();
+//
+//        answer.setUserId(2);
+//        answer.setExerciseId(2);
+//        answer.setScore(6);
+//        answer.setChecked("0");
+//
+//        System.out.println(answerService.addAnswer(answer));
+//    }
 
-        answer.setUserId(2);
-        answer.setExerciseId(2);
-        answer.setScore(6);
-        answer.setChecked("0");
 
-        System.out.println(answerService.addAnswer(answer));
-    }
 
     @Test
     public void testDeleteAnswer() throws Exception{
         System.out.println(answerService.deleteAnswer(3));
     }
+
+
 
 }

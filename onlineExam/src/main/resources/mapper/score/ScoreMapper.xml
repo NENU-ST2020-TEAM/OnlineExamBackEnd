@@ -37,4 +37,16 @@
         WHERE t_score.paperId = #{paperId} AND t_score.userId = t_user.userId AND t_paper.paperId = #{paperId}
     </select>
 
+    <select id="listScoreByMark1" resultMap="Score">
+        SELECT scoreId, paperId, t_score.userId, mark, username, paperName
+        FROM t_score, t_user
+        WHERE t_score.paperId = #{paperId} AND t_score.mark &gt;= 60 AND t_score.userId = t_user.userId
+    </select>
+
+    <select id="listScoreByMark2" resultMap="Score">
+        SELECT scoreId, paperId, t_score.userId, mark, username, paperName
+        FROM t_score, t_user
+        WHERE t_score.paperId = #{paperId} AND t_score.mark &lt; 60 AND t_score.userId = t_user.userId
+    </select>
+
 </mapper>

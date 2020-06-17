@@ -1,8 +1,17 @@
 package com.nenusoftware.onlineexam.service.paperdetail.impl;
 
+
+import com.alibaba.fastjson.JSONArray;
+import com.nenusoftware.onlineexam.entity.answer.Answer;
+import com.nenusoftware.onlineexam.entity.paper.Paper;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
+import com.nenusoftware.onlineexam.entity.score.Score;
+import com.nenusoftware.onlineexam.entity.wrong.Wrong;
 import com.nenusoftware.onlineexam.mapper.paperdetail.PaperDetailMapper;
+import com.nenusoftware.onlineexam.service.paper.PaperService;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
+import com.nenusoftware.onlineexam.service.score.ScoreService;
+import com.nenusoftware.onlineexam.service.wrong.WrongService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +29,14 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     @Resource
     PaperDetailMapper paperDetailMapper;
 
+    @Resource
+    PaperService paperService;
+
+    @Resource
+    ScoreService scoreService;
+
+    @Resource
+    WrongService wrongService;
     /**
      * 列出所有试卷详细信息
      * @return 返回List形式的试卷详细信息
@@ -42,6 +59,16 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     public List<PaperDetail> listPaperDetailByPaperId(int paperId) throws Exception{
         List<PaperDetail> paperDetailList = Collections.emptyList();
         paperDetailList = paperDetailMapper.listPaperDetailByPaperId(paperId);
+        for(int i=0;i<paperDetailList.size();i++){
+            PaperDetail paperDetail = new PaperDetail();
+            paperDetail = paperDetailList.get(i);
+            String str, str1, str2, str3;
+            str1 = paperDetail.getAnswer();
+            str2 = paperDetail.getAnswer2();
+            str3 = paperDetail.getAnswer3();
+            str = "关键字为："+str1 + " " + str2 + " " + str3;
+            paperDetail.setAnswer(str);
+        }
         return paperDetailList;
     }
 
@@ -122,4 +149,95 @@ public class PaperDetailServiceImpl implements PaperDetailService {
         return paperDetailItemsList;
     }
 
+    @Override
+    public PaperDetail queryQuestion(int paperDetailId) throws Exception{
+        List<PaperDetail> paperDetailItemsList = Collections.emptyList();
+        PaperDetail paperDetail = new PaperDetail();
+        paperDetailItemsList = paperDetailMapper.queryQuestion(paperDetailId);
+        paperDetail = paperDetailItemsList.get(0);
+        return paperDetail;
+    }
+
+    @Override
+    public int judgeQuestion(JSONArray jsonArray, int userId, int paperId) throws Exception{
+        int result = 0;
+        try{
+            for(int i=0;i<jsonArray.size();i++){
+                Answer answer = new Answer();
+                PaperDetail paperDetail = new PaperDetail();
+                String pdid = jsonArray.getJSONObject(i).getString("paperDetailId");
+                String solution = jsonArray.getJSONObject(i).getString("answer");
+                int paperDetailId = Integer.parseInt(pdid);
+                paperDetail = queryQuestion(paperDetailId);
+                String type = paperDetail.getExerciseType();
+                answer.setUserId(userId);
+                answer.setSolution(solution);
+                answer.setRight(paperDetail.getAnswer());
+                answer.setScore(paperDetail.getScore());
+                int score = answer.getScore();
+                if(type.equals("简答题")){
+                    int index1 = solution.indexOf(paperDetail.getAnswer());
+                    int index2 = solution.indexOf(paperDetail.getAnswer2());
+                    int index3 = solution.indexOf(paperDetail.getAnswer3());
+                    int cont = 0;
+                    int keycont = 1;
+                    if(!paperDetail.getAnswer2().equals("")){
+                        keycont++;
+                    }
+                    if(!paperDetail.getAnswer3().equals("")){
+                        keycont++;
+                    }
+                    if(index1 != -1){
+                        cont++;
+                    }
+                    if(index2 != -1 && !paperDetail.getAnswer2().equals("")){
+                        cont++;
+                    }
+                    if(index3 != -1 && !paperDetail.getAnswer3().equals("")){
+                        cont++;
+                    }
+                    int nowScore = (cont * score / keycont);
+                    result += nowScore;
+                    if(nowScore < score){
+                        Wrong wrong = new Wrong();
+                        wrong.setUserId(userId);
+                        wrong.setPaperId(paperId);
+                        wrong.setPaperDetailId(paperDetailId);
+                        wrong.setAnswer(solution);
+                        wrong.setScore(score);
+                        wrong.setNowScore(nowScore);
+                        wrong.setRight("关键字为："+paperDetail.getAnswer()+" "+paperDetail.getAnswer2()+" "+paperDetail.getAnswer3());
+                        wrongService.addWrong(wrong);
+                    }
+                }
+                else{
+                    if(answer.getSolution().equals(answer.getRight())){
+                        result += score;
+                    }
+                    else{
+                        Wrong wrong = new Wrong();
+                        wrong.setUserId(userId);
+                        wrong.setPaperId(paperId);
+                        wrong.setPaperDetailId(paperDetailId);
+                        wrong.setAnswer(solution);
+                        wrong.setRight(paperDetail.getAnswer());
+                        wrong.setScore(score);
+                        wrong.setNowScore(0);
+                        wrongService.addWrong(wrong);
+                    }
+                }
+            }
+            Paper paper = paperService.queryPaperNameById(paperId);
+            String paperName = paper.getPaperName();
+            Score score = new Score();
+            score.setUserId(userId);
+            score.setMark(result);
+            score.setPaperId(paperId);
+            score.setPaperName(paperName);
+            scoreService.addScore(score);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return result;
+    }
 }

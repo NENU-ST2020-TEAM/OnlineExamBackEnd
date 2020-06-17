@@ -173,18 +173,18 @@ public class UserController {
         System.out.println("退出成功");
     }
 
-    /**
-     * 删除用户
-     * @param userIdStr 用户编号
-     * @throws Exception
-     */
-    @RequestMapping("/deleteUser")
-    @ResponseBody
-    public void deleteUser(String userIdStr) throws Exception{
-        int userId = Integer.parseInt(userIdStr);
-        userService.deleteUser(userId);
-        System.out.println("删除成功");
-    }
+//    /**
+//     * 删除用户
+//     * @param userIdStr 用户编号
+//     * @throws Exception
+//     */
+//    @RequestMapping("/deleteUser")
+//    @ResponseBody
+//    public void deleteUser(String userIdStr) throws Exception{
+//        int userId = Integer.parseInt(userIdStr);
+//        userService.deleteUser(userId);
+//        System.out.println("删除成功");
+//    }
 
     @RequestMapping("file")
     public String file(){
@@ -243,16 +243,16 @@ public class UserController {
         }
     }
 
-    /**
-     * 修改用户权限
-     * @param userIdStr 用户编号
-     * @throws Exception
-     */
-    @RequestMapping("/updatePower")
-    @ResponseBody
-    public void updatePower(String userIdStr) throws Exception {
-        int userId = Integer.parseInt(userIdStr);
-        userService.updatePower(userId);
-        System.out.println("修改成功!");
-    }
+//    /**
+//     * 修改用户权限
+//     * @param userIdStr 用户编号
+//     * @throws Exception
+//     */
+//    @RequestMapping("/updatePower")
+//    @ResponseBody
+//    public void updatePower(String userIdStr) throws Exception {
+//        int userId = Integer.parseInt(userIdStr);
+//        userService.updatePower(userId);
+//        System.out.println("修改成功!");
+//    }
 }

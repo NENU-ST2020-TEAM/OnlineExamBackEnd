@@ -11,11 +11,15 @@ public class Answer {
 
     private Integer userId;
 
-    private Integer exerciseId;
+    private Integer paperDetailId;
+
+    private Integer paperId;
 
     private Integer score;
 
-    private String checked;
+    private String solution;
+
+    private String right;
 
     public Integer getAnswerId() {
         return answerId;
@@ -33,12 +37,20 @@ public class Answer {
         this.userId = userId;
     }
 
-    public Integer getExerciseId() {
-        return exerciseId;
+    public Integer getPaperDetailId() {
+        return paperDetailId;
     }
 
-    public void setExerciseId(Integer exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setPaperDetailId(Integer paperDetailId) {
+        this.paperDetailId = paperDetailId;
+    }
+
+    public Integer getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(Integer paperId) {
+        this.paperId = paperId;
     }
 
     public Integer getScore() {
@@ -49,12 +61,20 @@ public class Answer {
         this.score = score;
     }
 
-    public String getChecked() {
-        return checked;
+    public String getSolution() {
+        return solution;
     }
 
-    public void setChecked(String checked) {
-        this.checked = checked;
+    public void setSolution(String solution) {
+        this.solution = solution;
+    }
+
+    public String getRight() {
+        return right;
+    }
+
+    public void setRight(String right) {
+        this.right = right;
     }
 
     @Override
@@ -62,9 +82,11 @@ public class Answer {
         return "Answer{" +
                 "answerId=" + answerId +
                 ", userId=" + userId +
-                ", exerciseId=" + exerciseId +
+                ", paperDetailId=" + paperDetailId +
+                ", paperId=" + paperId +
                 ", score=" + score +
-                ", checked='" + checked + '\'' +
+                ", solution='" + solution + '\'' +
+                ", right='" + right + '\'' +
                 '}';
     }
 }

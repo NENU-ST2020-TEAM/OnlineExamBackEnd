@@ -69,4 +69,28 @@ public class ScoreServiceImpl implements ScoreService {
         return scoreList;
     }
 
+    /**
+     * 根据试卷编号列出该试卷所有成绩在60分及以上的学生
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Score> listScoreByMark1(int paperId) throws Exception{
+        List<Score> list = scoreMapper.listScoreByMark1(paperId);
+        return list;
+    }
+
+    /**
+     * 根据试卷编号列出该试卷所有成绩在60分以下的学生
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Score> listScoreByMark2(int paperId) throws Exception{
+        List<Score> list = scoreMapper.listScoreByMark2(paperId);
+        return list;
+    }
+
 }

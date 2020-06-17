@@ -39,4 +39,5 @@ public interface AnswerMapper {
      */
     public boolean deleteAnswer(@Param("answerId") int answerId) throws Exception;
 
+
 }

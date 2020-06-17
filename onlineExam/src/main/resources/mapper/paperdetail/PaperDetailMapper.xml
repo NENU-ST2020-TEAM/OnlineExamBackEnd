@@ -14,6 +14,8 @@
         <result property="typeC" column="typeC"/>
         <result property="typeD" column="typeD"/>
         <result property="answer" column="answer"/>
+        <result property="answer2" column="answer2"/>
+        <result property="answer3" column="answer3"/>
         <result property="exerciseType" column="exerciseType"/>
         <result property="score" column="score"/>
         <result property="paperName" column="paperName"/>
@@ -32,9 +34,9 @@
 
     <insert id="addPaperDetail">
         INSERT INTO t_paperdetail
-        (paperDetailId, paperId, exerciseId, content, typeA, typeB, typeC, typeD, answer, exerciseType, score)
+        ( `content`, `typeA`, `typeB`, `typeC`, `typeD`, `answer`,`answer2`,`answer3`, `exerciseType`, `score`)
         VALUES
-        (#{paperDetail.paperDetailId}, #{paperDetail.paperId}, #{paperDetail.exerciseId}, #{paperDetail.content}, #{paperDetail.typeA}, #{paperDetail.typeB}, #{paperDetail.typeC}, #{paperDetail.typeD}, #{paperDetail.answer}, #{paperDetail.exerciseType}, #{paperDetail.score})
+        (#{paperDetail.content}, #{paperDetail.typeA}, #{paperDetail.typeB}, #{paperDetail.typeC}, #{paperDetail.typeD}, #{paperDetail.answer},#{paperDetail.answer2},#{paperDetail.answer3}, #{paperDetail.exerciseType}, #{paperDetail.score})
     </insert>
 
     <delete id="deletePaperDetail">
@@ -44,7 +46,7 @@
 
     <update id="updatePaperDetail">
         update t_paperdetail
-        SET paperId = #{paperDetail.paperId}, exerciseId = #{paperDetail.exerciseId}, content = #{paperDetail.content}, typeA = #{paperDetail.typeA}, typeB = #{paperDetail.typeB}, typeC = #{paperDetail.typeC}, typeD = #{paperDetail.typeD}, answer = #{paperDetail.answer}, exerciseType = #{paperDetail.exerciseType}, score = #{paperDetail.score}
+        SET content = #{paperDetail.content}, typeA = #{paperDetail.typeA}, typeB = #{paperDetail.typeB}, typeC = #{paperDetail.typeC}, typeD = #{paperDetail.typeD}, answer = #{paperDetail.answer}, answer2 = #{paperDetail.answer2}, answer3 = #{paperDetail.answer3}, exerciseType = #{paperDetail.exerciseType}, score = #{paperDetail.score}
         WHERE paperDetailId = #{paperDetail.paperDetailId}
     </update>
 
@@ -62,6 +64,12 @@
 
     <select id="queryExerciseItemsById" resultMap="PaperDetail">
         SELECT `typeA`, `typeB`, `typeC`, `typeD`
+        FROM t_paperdetail
+        WHERE t_paperdetail.paperDetailId = #{paperDetailId}
+    </select>
+
+    <select id="queryQuestion" resultMap="PaperDetail">
+        SELECT *
         FROM t_paperdetail
         WHERE t_paperdetail.paperDetailId = #{paperDetailId}
     </select>

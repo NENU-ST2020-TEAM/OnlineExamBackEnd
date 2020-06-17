@@ -48,9 +48,19 @@ public class PaperDetail {
     private String typeD;
 
     /**
-     * 题目答案
+     * 题目答案或关键字段1
      */
     private String answer;
+
+    /**
+     * 关键字段2
+     */
+    private String answer2;
+
+    /**
+     * 关键字段3
+     */
+    private String answer3;
 
     /**
      * 题目类型
@@ -163,6 +173,22 @@ public class PaperDetail {
         this.paperName = paperName;
     }
 
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public void setAnswer2(String answer2) {
+        this.answer2 = answer2;
+    }
+
+    public String getAnswer3() {
+        return answer3;
+    }
+
+    public void setAnswer3(String answer3) {
+        this.answer3 = answer3;
+    }
+
     @Override
     public String toString() {
         return "PaperDetail{" +
@@ -175,6 +201,8 @@ public class PaperDetail {
                 ", typeC='" + typeC + '\'' +
                 ", typeD='" + typeD + '\'' +
                 ", answer='" + answer + '\'' +
+                ", answer2='" + answer2 + '\'' +
+                ", answer3='" + answer3 + '\'' +
                 ", exerciseType='" + exerciseType + '\'' +
                 ", score=" + score +
                 ", paperName='" + paperName + '\'' +

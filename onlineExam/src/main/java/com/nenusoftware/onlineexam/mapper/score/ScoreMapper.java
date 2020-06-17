@@ -48,4 +48,21 @@ public interface ScoreMapper {
      */
     public List<Score> queryScoreByPaper(@Param("paperId") int paperId) throws Exception;
 
+
+    /**
+     * 列出某张卷子及格的学生
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    public List<Score> listScoreByMark1(@Param("paperId") int paperId) throws Exception;
+
+    /**
+     * 列出某张卷子未及格的学生
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    public List<Score> listScoreByMark2(@Param("paperId") int paperId) throws Exception;
+
 }

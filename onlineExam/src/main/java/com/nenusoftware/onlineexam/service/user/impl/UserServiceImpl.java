@@ -59,16 +59,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /**
-     * 删除用户
-     * @param userId 用户编号
-     * @return 删除成功返回true，删除失败返回false
-     * @throws Exception
-     */
-    @Override
-    public boolean deleteUser(int userId) throws Exception{
-        return userMapper.deleteUser(userId);
-    }
+//    /**
+//     * 删除用户
+//     * @param userId 用户编号
+//     * @return 删除成功返回true，删除失败返回false
+//     * @throws Exception
+//     */
+//    @Override
+//    public boolean deleteUser(int userId) throws Exception{
+//        return userMapper.deleteUser(userId);
+//    }
 
     /**
      * 修改用户
@@ -81,16 +81,16 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateUser(user);
     }
 
-    /**
-     * 修改用户权限（用于后台管理）
-     * @param userId 用户编号
-     * @return 修改成功返回true，修改失败返回false
-     * @throws Exception
-     */
-    @Override
-    public boolean updatePower(int userId) throws Exception{
-        return userMapper.updatePower(userId);
-    }
+//    /**
+//     * 修改用户权限（用于后台管理）
+//     * @param userId 用户编号
+//     * @return 修改成功返回true，修改失败返回false
+//     * @throws Exception
+//     */
+//    @Override
+//    public boolean updatePower(int userId) throws Exception{
+//        return userMapper.updatePower(userId);
+//    }
 
     /**
      * 根据用户名查询数据信息
