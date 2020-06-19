@@ -17,6 +17,21 @@ public class Paper {
      */
     private String paperName;
 
+    /**
+     * 是否发布试卷（0:未发布；1：发布）
+     */
+    private Integer status;
+
+    /**
+     * 答题开始时间
+     */
+    private String beginTime;
+
+    /**
+     * 答题时长
+     */
+    private String duration;
+
     public Integer getPaperId() {
         return paperId;
     }
@@ -33,11 +48,38 @@ public class Paper {
         this.paperName = paperName;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "Paper{" +
                 "paperId=" + paperId +
                 ", paperName='" + paperName + '\'' +
+                ", status=" + status +
+                ", beginTime='" + beginTime + '\'' +
+                ", duration='" + duration + '\'' +
                 '}';
     }
 }
