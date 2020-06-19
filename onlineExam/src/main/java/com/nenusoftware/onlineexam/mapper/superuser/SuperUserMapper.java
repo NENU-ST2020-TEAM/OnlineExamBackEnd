@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
  * @author : kongyy
  * @time : 2020/6/16 21:35
  */
-
 @Mapper
 @Repository
 public interface SuperUserMapper {

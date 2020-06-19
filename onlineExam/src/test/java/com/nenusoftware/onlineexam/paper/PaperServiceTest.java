@@ -27,7 +27,7 @@ public class PaperServiceTest {
 
     @Test
     public void testAddPaper() throws Exception {
-        String paperName = "增加试卷";
+        String paperName = "增加试卷testtest";
         Paper paper = new Paper();
         paper.setPaperName(paperName);
         paperService.addPaper(paper);

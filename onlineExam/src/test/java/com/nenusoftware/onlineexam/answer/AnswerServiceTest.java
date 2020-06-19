@@ -1,13 +1,11 @@
 package com.nenusoftware.onlineexam.answer;
 
-import com.nenusoftware.onlineexam.entity.answer.Answer;
 import com.nenusoftware.onlineexam.service.answer.AnswerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import sun.reflect.annotation.ExceptionProxy;
 
 
 /**
@@ -22,10 +20,10 @@ public class AnswerServiceTest {
     @Autowired
     AnswerService answerService;
 
-    @Test
-    public void testListAllAnswer() throws Exception{
-        System.out.println(answerService.listAllAnswer());
-    }
+//    @Test
+//    public void testListAllAnswer() throws Exception{
+//        System.out.println(answerService.listAllAnswer());
+//    }
 
 //    @Test
 //    public void testAddAnswer() throws Exception {

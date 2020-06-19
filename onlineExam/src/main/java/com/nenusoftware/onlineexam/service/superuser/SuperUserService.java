@@ -1,7 +1,5 @@
 package com.nenusoftware.onlineexam.service.superuser;
 
-
-
 /**
  * @author : kongyy
  * @time : 2020/6/16 21:39
@@ -23,6 +21,4 @@ public interface SuperUserService {
      * @throws Exception
      */
     public boolean deleteUser(int userId) throws Exception;
-
-
 }
