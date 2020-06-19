@@ -71,9 +71,9 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     public List<PaperDetail> listPaperDetailByPaperId(int paperId) throws Exception{
         List<PaperDetail> paperDetailList = Collections.emptyList();
         paperDetailList = paperDetailMapper.listPaperDetailByPaperId(paperId);
-        for(int i = 0;i < paperDetailList.size();i++){
+        for (PaperDetail detail : paperDetailList) {
             PaperDetail paperDetail = new PaperDetail();
-            paperDetail = paperDetailList.get(i);
+            paperDetail = detail;
             String str, str1, str2, str3;
             str1 = paperDetail.getAnswer();
             str2 = paperDetail.getAnswer2();
@@ -87,12 +87,11 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     /**
      * 增加试卷详细信息
      * @param paperDetail 试卷详细信息实体
-     * @return 增加成功返回true，增加失败返回false
      * @throws Exception
      */
     @Override
-    public boolean addPaperDetail(PaperDetail paperDetail) throws Exception {
-        return paperDetailMapper.addPaperDetail(paperDetail);
+    public void addPaperDetail(PaperDetail paperDetail) throws Exception {
+        paperDetailMapper.addPaperDetail(paperDetail);
     }
 
     /**
@@ -109,12 +108,11 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     /**
      * 修改试卷详细信息
      * @param paperDetail 试卷详细信息实体
-     * @return 修改成功返回true，修改失败返回false
      * @throws Exception
      */
     @Override
-    public boolean updatePaperDetail(PaperDetail paperDetail) throws Exception{
-        return paperDetailMapper.updatePaperDetail(paperDetail);
+    public void updatePaperDetail(PaperDetail paperDetail) throws Exception{
+        paperDetailMapper.updatePaperDetail(paperDetail);
     }
 
     /**
@@ -271,4 +269,26 @@ public class PaperDetailServiceImpl implements PaperDetailService {
         }
         return result;
     }
+
+//    /**
+//     * 根据试卷编号列出试卷详细信息
+//     * @param paperId 试卷编号
+//     * @return 返回List形式的试卷详细信息
+//     * @throws Exception
+//     */
+//    @Override
+//    public List<PaperDetail> listPublishPaperByPaperId(int paperId, int status) throws Exception{
+//        List<PaperDetail> paperDetailList = paperDetailMapper.listPublishPaperByPaperId(paperId, status);
+//        for (PaperDetail detail : paperDetailList) {
+//            PaperDetail paperDetail = new PaperDetail();
+//            paperDetail = detail;
+//            String str, str1, str2, str3;
+//            str1 = paperDetail.getAnswer();
+//            str2 = paperDetail.getAnswer2();
+//            str3 = paperDetail.getAnswer3();
+//            str = "关键字为：" + str1 + " " + str2 + " " + str3;
+//            paperDetail.setAnswer(str);
+//        }
+//        return paperDetailList;
+//    }
 }

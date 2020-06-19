@@ -26,10 +26,18 @@ public class PaperServiceTest {
     }
 
     @Test
+    public void testListPublishPaper() throws Exception{
+        System.out.println(paperService.listPublishPaper(1));
+    }
+
+    @Test
     public void testAddPaper() throws Exception {
-        String paperName = "增加试卷testtest";
+        String paperName = "新增一张试卷";
         Paper paper = new Paper();
         paper.setPaperName(paperName);
+        paper.setStatus(0);
+        paper.setBeginTime(null);
+        paper.setDuration(null);
         paperService.addPaper(paper);
         System.out.println(paperService.queryPaperIdByName(paperName).getPaperId());
     }
@@ -63,5 +71,15 @@ public class PaperServiceTest {
     public void testQueryPaperIdByName() throws Exception{
         String paperName = "2018年秋季学期17级JavaEE期末考试题";
         System.out.println(paperService.queryPaperIdByName(paperName).getPaperId());
+    }
+
+    @Test
+    public void testPublishPaper() throws Exception{
+        Paper paper = new Paper();
+        paper.setPaperId(3);
+        paper.setStatus(0);
+        paper.setBeginTime("2020-06-08: 15:00");
+        paper.setDuration("1.5小时");
+        System.out.println(paperService.publishPaper(paper));
     }
 }

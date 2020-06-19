@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 19/06/2020 16:13:14
+ Date: 19/06/2020 17:43:36
 */
 
 SET NAMES utf8mb4;
@@ -73,6 +73,8 @@ INSERT INTO `t_connect` VALUES (19, 1, 00000000010);
 INSERT INTO `t_connect` VALUES (20, 1, 00000000010);
 INSERT INTO `t_connect` VALUES (21, 1, 00000000010);
 INSERT INTO `t_connect` VALUES (22, 1, 00000000010);
+INSERT INTO `t_connect` VALUES (23, 35, 00000000000);
+INSERT INTO `t_connect` VALUES (24, 36, 00000000000);
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -122,17 +124,17 @@ CREATE TABLE `t_paper`  (
 -- ----------------------------
 -- Records of t_paper
 -- ----------------------------
-INSERT INTO `t_paper` VALUES (2, '2018年秋季学期17级JavaEE期末考试题', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (4, '测试', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (8, '测试增加试卷', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (9, 'test', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (1, '2018年秋季学期17级JavaEE期末考试题', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (2, '测试', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (3, '2017年秋季学期17级高等数学期末考试题', 1, '2020-06-08: 15:00', '1.5小时');
+INSERT INTO `t_paper` VALUES (4, 'test', 0, NULL, NULL);
 INSERT INTO `t_paper` VALUES (10, 'test2', 0, NULL, NULL);
 INSERT INTO `t_paper` VALUES (12, '2020年春季学期软件质量保证与测试考试', 0, NULL, NULL);
 INSERT INTO `t_paper` VALUES (19, 'test3', 0, NULL, NULL);
 INSERT INTO `t_paper` VALUES (20, '增加试卷', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (27, '增加试卷testtest', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (28, '增加试卷名称测试', 0, NULL, NULL);
-INSERT INTO `t_paper` VALUES (31, '增加试卷名称测试', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (34, '新增一张试卷', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (35, 'test4', 0, NULL, NULL);
+INSERT INTO `t_paper` VALUES (36, 'test5', 1, '2020-06-08', '2h');
 
 -- ----------------------------
 -- Table structure for t_paperdetail

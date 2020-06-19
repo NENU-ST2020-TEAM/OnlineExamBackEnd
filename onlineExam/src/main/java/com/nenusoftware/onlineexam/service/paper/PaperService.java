@@ -1,6 +1,7 @@
 package com.nenusoftware.onlineexam.service.paper;
 
 import com.nenusoftware.onlineexam.entity.paper.Paper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,14 @@ public interface PaperService {
      * @throws Exception
      */
     public List<Paper> listAllPaper() throws Exception;
+
+    /**
+     * 列出所有已发布试卷
+     * @param status 1：发布；0：不发布
+     * @return 返回 List形式的试卷信息
+     * @throws Exception
+     */
+    public List<Paper> listPublishPaper(int status) throws Exception;
 
     /**
      * 增加试卷
@@ -65,5 +74,13 @@ public interface PaperService {
      * @throws Exception
      */
     public Paper queryPaperIdByName(String paperName) throws Exception;
+
+    /**
+     * 发布试卷
+     * @param paper 试卷实体
+     * @return 发布成功返回true，发布失败返回false
+     * @throws Exception
+     */
+    public boolean publishPaper(Paper paper) throws Exception;
 
 }

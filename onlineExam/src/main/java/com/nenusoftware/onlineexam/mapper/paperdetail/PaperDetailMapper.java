@@ -95,4 +95,14 @@ public interface PaperDetailMapper {
      */
     public List<PaperDetail> queryQuestion(@Param("paperDetailId") int paperDetailId) throws Exception;
 
+//    /**
+//     * 根据试卷编号列出已发布试卷详细信息
+//     * @param paperId 试卷编号
+//     * @param status 是否发布
+//     * @return 返回 List形式的试卷详细信息
+//     * @throws Exception
+//     */
+//    public List<PaperDetail> listPublishPaperByPaperId(@Param("paperId") int paperId,
+//                                                       @Param("status")  int status) throws Exception;
+
 }

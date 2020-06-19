@@ -24,9 +24,17 @@ public interface PaperMapper {
     public List<Paper> listAllPaper() throws Exception;
 
     /**
+     * 列出所有已发布试卷
+     * @param status 1：发布；0：不发布
+     * @return 返回 List形式的试卷信息
+     * @throws Exception
+     */
+    public List<Paper> listPublishPaper(@Param("status") int status) throws Exception;
+
+    /**
      * 增加试卷
      * @param paper 试卷实体
-     * @return 增加成功返回true，增加失败返回false
+     * @return 增加成功返回 true，增加失败返回 false
      * @throws Exception
      */
     public boolean addPaper(@Param("paper") Paper paper) throws Exception;
@@ -56,7 +64,7 @@ public interface PaperMapper {
     public List<Paper> queryPaperName(@Param("keyWord") String keyWord) throws Exception;
 
     /**
-     * 根据Id查询试卷名称
+     * 根据 Id查询试卷名称
      * @param paperId 试卷编号
      * @return 返回Paper形式的试卷信息
      * @throws Exception
@@ -70,5 +78,13 @@ public interface PaperMapper {
      * @throws Exception
      */
     public Paper queryPaperIdByName(@Param("paperName") String paperName) throws Exception;
+
+    /**
+     * 发布试卷
+     * @param paper 试卷实体
+     * @return 发布成功返回true，发布失败返回false
+     * @throws Exception
+     */
+    public boolean publishPaper(@Param("paper") Paper paper) throws Exception;
 
 }

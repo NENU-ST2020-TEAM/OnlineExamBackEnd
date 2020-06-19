@@ -45,7 +45,23 @@ public class PaperController {
     }
 
     /**
-     * 发布试卷
+     * 列出所有已发布试卷 (1：发布；0：不发布)
+     * @return 返回 List形式的试卷信息
+     */
+    @RequestMapping("/listPublishPaper")
+    @ResponseBody
+    public List<Paper> listPublishPaper(){
+        List<Paper> paperList = null;
+        try {
+            paperList = paperService.listPublishPaper(1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return paperList;
+    }
+
+    /**
+     * 增加试卷
      * @param paperName 试卷名称
      * @return 试卷编号
      */
@@ -56,6 +72,9 @@ public class PaperController {
         try {
             Paper paper = new Paper();
             paper.setPaperName(paperName);
+            paper.setStatus(0);
+            paper.setBeginTime(null);
+            paper.setDuration(null);
             paperService.addPaper(paper);
             paperId = paperService.queryPaperIdByName(paperName).getPaperId();
 
@@ -123,5 +142,29 @@ public class PaperController {
             e.printStackTrace();
         }
         return paperList;
+    }
+
+    /**
+     * 发布试卷
+     * @param paperIdStr 试卷编号
+     * @param beginTime 开始时间
+     * @param duration 做题时长
+     */
+    @ResponseBody
+    @RequestMapping("/publishPaper")
+    public void publishPaper(String paperIdStr, String beginTime, String duration) {
+        int paperId = Integer.parseInt(paperIdStr);
+        try {
+            Paper paper = new Paper();
+            paper.setPaperId(paperId);
+            paper.setStatus(1);
+            paper.setBeginTime(beginTime);
+            paper.setDuration(duration);
+            paperService.publishPaper(paper);
+            System.out.println("发布试卷成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("发布试卷失败！");
+        }
     }
 }

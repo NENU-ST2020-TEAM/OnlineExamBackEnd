@@ -7,18 +7,27 @@
     <resultMap id="Paper" type="com.nenusoftware.onlineexam.entity.paper.Paper">
         <id property="paperId" column="paperId"/>
         <result property="paperName" column="paperName"/>
+        <result property="status" column="status"/>
+        <result property="beginTime" column="beginTime"/>
+        <result property="duration" column="duration"/>
     </resultMap>
 
     <select id="listAllPaper" resultMap="Paper">
-        SELECT `paperId`, `paperName`
+        SELECT `paperId`, `paperName`, `beginTime`, `duration`
         FROM `t_paper`
+    </select>
+
+    <select id="listPublishPaper" resultMap="Paper">
+        SELECT `paperId`, `paperName`, `beginTime`, `duration`
+        FROM `t_paper`
+        WHERE status = #{status}
     </select>
 
     <insert id="addPaper">
         INSERT INTO t_paper
-        (paperName)
+        (paperName, status, beginTime, duration)
         VALUES
-        (#{paper.paperName})
+        (#{paper.paperName}, #{paper.status}, #{paper.beginTime}, #{paper.duration})
     </insert>
 
     <delete id="deletePaper">
@@ -49,4 +58,10 @@
         FROM t_paper
         WHERE `paperName` LIKE #{paperName}
     </select>
+
+    <update id="publishPaper">
+        update t_paper
+        SET status = #{paper.status}, beginTime = #{paper.beginTime}, duration = #{paper.duration}
+        WHERE paperId = #{paper.paperId}
+    </update>
 </mapper>

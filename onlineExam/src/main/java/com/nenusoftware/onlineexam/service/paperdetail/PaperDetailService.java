@@ -31,10 +31,9 @@ public interface PaperDetailService {
     /**
      * 增加试卷详细信息
      * @param paperDetail 试卷详细信息实体
-     * @return 增加成功返回true，增加失败返回false
      * @throws Exception
      */
-    public boolean addPaperDetail(PaperDetail paperDetail) throws Exception;
+    public void addPaperDetail(PaperDetail paperDetail) throws Exception;
 
     /**
      * 删除试卷详细信息
@@ -47,10 +46,9 @@ public interface PaperDetailService {
     /**
      * 修改试卷详细信息
      * @param paperDetail 试卷详细信息实体
-     * @return 修改成功返回true，修改失败返回false
      * @throws Exception
      */
-    public boolean updatePaperDetail(PaperDetail paperDetail) throws Exception;
+    public void updatePaperDetail(PaperDetail paperDetail) throws Exception;
 
     /**
      * 模糊查询（查询试卷题目的内容或类型）
@@ -84,6 +82,14 @@ public interface PaperDetailService {
      */
     public PaperDetail queryQuestion(int paperDetailId) throws Exception;
 
+    /**
+     * 前端传回做题信息，进行判分，并将错误的题目存入错题集中
+     * @param jsonArray 学生做题信息，其中包含两项信息，学生答案：answer和这道题目的id：paperDetailId
+     * @param userId 学生的id
+     * @param paperId 这套试卷的id
+     * @return
+     * @throws Exception
+     */
     public int judgeQuestion(JSONArray jsonArray, int userId, int paperId) throws Exception;
 
     /**
@@ -93,5 +99,14 @@ public interface PaperDetailService {
      * @throws Exception
      */
     public PaperDetail queryIdByContent(@Param("content") String content) throws Exception;
+
+//    /**
+//     * 根据试卷编号列出已发布试卷详细信息
+//     * @param paperId 试卷编号
+//     * @param status 是否发布
+//     * @return 返回 List形式的试卷详细信息
+//     * @throws Exception
+//     */
+//    public List<PaperDetail> listPublishPaperByPaperId(int paperId, int status) throws Exception;
 
 }

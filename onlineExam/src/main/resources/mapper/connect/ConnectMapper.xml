@@ -23,8 +23,16 @@
     <select id="listAllConnect" resultMap="PaperDetail">
         SELECT *
         FROM t_connect, t_paperdetail
-        WHERE t_connect.paperId=#{paperId} AND t_paperdetail.exerciseType=#{exerciseType} AND t_connect.paperDetailId = t_paperdetail.paperDetailId
+        WHERE t_connect.paperId=#{paperId} AND t_paperdetail.exerciseType=#{exerciseType}
+        AND t_connect.paperDetailId = t_paperdetail.paperDetailId
     </select>
+
+<!--    <select id="listPublishPaperByPaperId" resultMap="PaperDetail">-->
+<!--        SELECT *-->
+<!--        FROM t_connect, t_paperdetail-->
+<!--        WHERE t_connect.paperId = #{paperId} AND t_paperdetail.exerciseType=#{exerciseType}-->
+<!--        AND t_connect.paperDetailId = t_paperdetail.paperDetailId AND t_paper.status = #{status}-->
+<!--    </select>-->
 
     <insert id="addConnect">
         INSERT INTO t_connect

@@ -33,6 +33,17 @@ public class PaperServiceImpl implements PaperService {
     }
 
     /**
+     * 列出所有已发布试卷
+     * @param status 1：发布；0：不发布
+     * @return 返回 List形式的试卷信息
+     * @throws Exception
+     */
+    @Override
+    public List<Paper> listPublishPaper(int status) throws Exception{
+        return paperMapper.listPublishPaper(status);
+    }
+
+    /**
      * 增加试卷
      * @param paper 试卷实体
      * @return 增加成功返回true，增加失败返回false
@@ -40,11 +51,7 @@ public class PaperServiceImpl implements PaperService {
      */
     @Override
     public boolean addPaper(Paper paper) throws Exception {
-        if(paperMapper.addPaper(paper)){
-            return true;
-        }else {
-            return false;
-        }
+        return paperMapper.addPaper(paper);
     }
 
     /**
@@ -105,4 +112,14 @@ public class PaperServiceImpl implements PaperService {
         return paperMapper.queryPaperIdByName(paperName);
     }
 
+    /**
+     * 发布试卷
+     * @param paper 试卷实体
+     * @return 发布成功返回true，发布失败返回false
+     * @throws Exception
+     */
+    @Override
+    public boolean publishPaper(Paper paper) throws Exception{
+        return paperMapper.publishPaper(paper);
+    }
 }
