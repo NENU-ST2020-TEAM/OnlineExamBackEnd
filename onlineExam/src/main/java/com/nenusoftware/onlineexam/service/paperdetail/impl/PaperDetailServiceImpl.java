@@ -12,6 +12,7 @@ import com.nenusoftware.onlineexam.service.paper.PaperService;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
 import com.nenusoftware.onlineexam.service.score.ScoreService;
 import com.nenusoftware.onlineexam.service.wrong.WrongService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +38,7 @@ public class PaperDetailServiceImpl implements PaperDetailService {
 
     @Resource
     WrongService wrongService;
+
     /**
      * 列出所有试卷详细信息
      * @return 返回List形式的试卷详细信息
@@ -46,6 +48,16 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     public List<PaperDetail> listAllPaperDetail() throws Exception{
         List<PaperDetail> paperDetailList = Collections.emptyList();
         paperDetailList = paperDetailMapper.listAllPaperDetail();
+        for (PaperDetail detail : paperDetailList) {
+            PaperDetail paperDetail = new PaperDetail();
+            paperDetail = detail;
+            String str, str1, str2, str3;
+            str1 = paperDetail.getAnswer();
+            str2 = paperDetail.getAnswer2();
+            str3 = paperDetail.getAnswer3();
+            str = "得分点为：" + str1 + " " + str2 + " " + str3;
+            paperDetail.setAnswer(str);
+        }
         return paperDetailList;
     }
 
@@ -59,14 +71,14 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     public List<PaperDetail> listPaperDetailByPaperId(int paperId) throws Exception{
         List<PaperDetail> paperDetailList = Collections.emptyList();
         paperDetailList = paperDetailMapper.listPaperDetailByPaperId(paperId);
-        for(int i=0;i<paperDetailList.size();i++){
+        for(int i = 0;i < paperDetailList.size();i++){
             PaperDetail paperDetail = new PaperDetail();
             paperDetail = paperDetailList.get(i);
             String str, str1, str2, str3;
             str1 = paperDetail.getAnswer();
             str2 = paperDetail.getAnswer2();
             str3 = paperDetail.getAnswer3();
-            str = "关键字为："+str1 + " " + str2 + " " + str3;
+            str = "关键字为：" + str1 + " " + str2 + " " + str3;
             paperDetail.setAnswer(str);
         }
         return paperDetailList;
@@ -80,11 +92,7 @@ public class PaperDetailServiceImpl implements PaperDetailService {
      */
     @Override
     public boolean addPaperDetail(PaperDetail paperDetail) throws Exception {
-        if(paperDetailMapper.addPaperDetail(paperDetail)){
-            return true;
-        }else {
-            return false;
-        }
+        return paperDetailMapper.addPaperDetail(paperDetail);
     }
 
     /**
@@ -133,6 +141,18 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     public List<PaperDetail> queryExerciseByTypes(String exerciseType) throws Exception{
         List<PaperDetail> paperDetailList = Collections.emptyList();
         paperDetailList = paperDetailMapper.queryExerciseByTypes(exerciseType);
+        for (PaperDetail detail : paperDetailList) {
+            PaperDetail paperDetail = new PaperDetail();
+            paperDetail = detail;
+            if(paperDetail.getExerciseType().equals("简答题")){
+                String str, str1, str2, str3;
+                str1 = paperDetail.getAnswer();
+                str2 = paperDetail.getAnswer2();
+                str3 = paperDetail.getAnswer3();
+                str = "得分点为：" + str1 + " " + str2 + " " + str3;
+                paperDetail.setAnswer(str);
+            }
+        }
         return paperDetailList;
     }
 
@@ -147,6 +167,17 @@ public class PaperDetailServiceImpl implements PaperDetailService {
         List<PaperDetail> paperDetailItemsList = Collections.emptyList();
         paperDetailItemsList = paperDetailMapper.queryExerciseItemsById(paperDetailId);
         return paperDetailItemsList;
+    }
+
+    /**
+     * 根据试题内容获取题目编号
+     * @param content 试题内容
+     * @return 题目编号
+     * @throws Exception
+     */
+    @Override
+    public PaperDetail queryIdByContent(@Param("content") String content) throws Exception{
+        return paperDetailMapper.queryIdByContent(content);
     }
 
     @Override

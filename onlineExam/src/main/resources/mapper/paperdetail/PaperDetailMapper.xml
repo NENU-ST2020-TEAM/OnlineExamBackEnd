@@ -46,7 +46,7 @@
 
     <update id="updatePaperDetail">
         update t_paperdetail
-        SET content = #{paperDetail.content}, typeA = #{paperDetail.typeA}, typeB = #{paperDetail.typeB}, typeC = #{paperDetail.typeC}, typeD = #{paperDetail.typeD}, answer = #{paperDetail.answer}, answer2 = #{paperDetail.answer2}, answer3 = #{paperDetail.answer3}, exerciseType = #{paperDetail.exerciseType}, score = #{paperDetail.score}
+        SET content = #{paperDetail.content}, typeA = #{paperDetail.typeA}, typeB = #{paperDetail.typeB}, typeC = #{paperDetail.typeC}, typeD = #{paperDetail.typeD}, answer = #{paperDetail.answer}, answer2 = #{paperDetail.answer2}, answer3 = #{paperDetail.answer3}, score = #{paperDetail.score}
         WHERE paperDetailId = #{paperDetail.paperDetailId}
     </update>
 
@@ -72,6 +72,12 @@
         SELECT *
         FROM t_paperdetail
         WHERE t_paperdetail.paperDetailId = #{paperDetailId}
+    </select>
+
+    <select id="queryIdByContent" resultMap="PaperDetail">
+        SELECT `paperDetailId`
+        FROM t_paperdetail
+        WHERE t_paperdetail.content = #{content}
     </select>
 
 </mapper>

@@ -1,8 +1,10 @@
 package com.nenusoftware.onlineexam.paperdetail;
 
-
 import com.alibaba.fastjson.JSONArray;
+import com.nenusoftware.onlineexam.entity.connect.Connect;
+import com.nenusoftware.onlineexam.entity.paper.Paper;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
+import com.nenusoftware.onlineexam.service.paper.PaperService;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
 
 import org.junit.Test;
@@ -10,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * @Author:Liangll
@@ -19,6 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PaperDetailServiceTest {
+
+    @Autowired
+    PaperService paperService;
 
     @Autowired
     PaperDetailService paperDetailService;
@@ -38,7 +45,12 @@ public class PaperDetailServiceTest {
      */
     @Test
     public void testListPaperDetailByPaperId() throws Exception{
-        int paperId = 2;
+        String paperName = "增加试卷名称测试";
+        Paper paper = new Paper();
+        paper.setPaperName(paperName);
+        paperService.addPaper(paper);
+        int paperId = paperService.queryPaperIdByName(paperName).getPaperId();
+        System.out.println(paperId);
         System.out.println(paperDetailService.listPaperDetailByPaperId(paperId));
     }
 
@@ -73,19 +85,18 @@ public class PaperDetailServiceTest {
     @Test
     public void testUpdatePaper() throws Exception{
         PaperDetail paperDetail = new PaperDetail();
-        paperDetail.setPaperDetailId(26);
+        paperDetail.setPaperDetailId(36);
         paperDetail.setContent("测试修改题目内容");
         paperDetail.setTypeA("测试A");
         paperDetail.setTypeB("测试B");
         paperDetail.setTypeC("测试C");
         paperDetail.setTypeD("测试D");
         paperDetail.setAnswer("测试修改正确答案");
-        paperDetail.setAnswer2("");
-        paperDetail.setAnswer3("");
-        paperDetail.setExerciseType("选择题");
+        paperDetail.setAnswer2("得分点2");
+        paperDetail.setAnswer3("得分点3");
         paperDetail.setScore(120);
-
         paperDetailService.updatePaperDetail(paperDetail);
+        System.out.println("修改题目信息成功!");
     }
 
     @Test
@@ -96,8 +107,29 @@ public class PaperDetailServiceTest {
 
     @Test
     public void testQueryExerciseByTypes() throws Exception{
-        String exerciseType = "单选题";
-        System.out.println(paperDetailService.queryExerciseByTypes(exerciseType));
+        String choiceType = "选择题";
+        String judgeType = "判断题";
+        String completionType = "填空题";
+        String shortAnswerType = "简答题";
+        List<PaperDetail> choiceList = null;
+        List<PaperDetail> judgeList = null;
+        List<PaperDetail> completionList = null;
+        List<PaperDetail> shortAnswerList = null;
+        try {
+            choiceList = paperDetailService.queryExerciseByTypes(choiceType);
+            judgeList = paperDetailService.queryExerciseByTypes(judgeType);
+            completionList = paperDetailService.queryExerciseByTypes(completionType);
+            shortAnswerList = paperDetailService.queryExerciseByTypes(shortAnswerType);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        assert judgeList != null;
+        choiceList.addAll(judgeList);
+        assert completionList != null;
+        choiceList.addAll(completionList);
+        assert shortAnswerList != null;
+        choiceList.addAll(shortAnswerList);
+        System.out.println(choiceList);
     }
 
     @Test
@@ -107,10 +139,16 @@ public class PaperDetailServiceTest {
     }
 
     @Test
-    public void testjudgeQuestion() throws Exception{
+    public void testJudgeQuestion() throws Exception{
         String jsonString = "[{\"answer\":\"后置双摄\",\"paperDetailId\":\"24\"}, {\"answer\":\"A\",\"paperDetailId\":\"11\"},{\"answer\":\"对\",\"paperDetailId\":\"3\"}]";
         JSONArray jsonArray = JSONArray.parseArray(jsonString);
         int result = paperDetailService.judgeQuestion(jsonArray, 1, 2);
         System.out.println(result);
+    }
+
+    @Test
+    public void testQueryIdByContent() throws Exception{
+        String content = "模块的内聚性最高的是？";
+        System.out.println(paperDetailService.queryIdByContent(content).getPaperDetailId());
     }
 }

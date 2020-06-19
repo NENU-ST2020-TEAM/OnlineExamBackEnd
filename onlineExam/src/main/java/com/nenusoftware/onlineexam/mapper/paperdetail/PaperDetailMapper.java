@@ -79,6 +79,20 @@ public interface PaperDetailMapper {
      */
     public List<PaperDetail> queryExerciseItemsById(@Param("paperDetailId") int paperDetailId) throws Exception;
 
+    /**
+     * 根据试题内容获取题目编号
+     * @param content 试题内容
+     * @return 题目编号
+     * @throws Exception
+     */
+    public PaperDetail queryIdByContent(@Param("content") String content) throws Exception;
+
+    /**
+     * 根据题目id查找某道题的答案以及分值
+     * @param paperDetailId 题目id
+     * @return 某道题的答案以及分值
+     * @throws Exception
+     */
     public List<PaperDetail> queryQuestion(@Param("paperDetailId") int paperDetailId) throws Exception;
 
 }

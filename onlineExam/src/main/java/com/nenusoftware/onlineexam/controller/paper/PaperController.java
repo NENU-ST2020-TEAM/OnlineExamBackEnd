@@ -1,6 +1,8 @@
 package com.nenusoftware.onlineexam.controller.paper;
 
+import com.nenusoftware.onlineexam.entity.connect.Connect;
 import com.nenusoftware.onlineexam.entity.paper.Paper;
+import com.nenusoftware.onlineexam.service.connect.ConnectService;
 import com.nenusoftware.onlineexam.service.paper.PaperService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,9 +25,12 @@ public class PaperController {
     @Resource
     PaperService paperService;
 
+    @Resource
+    ConnectService connectService;
+
     /**
      * 列出所有试卷
-     * @return 返回List形式的试卷信息
+     * @return 返回 List形式的试卷信息
      */
     @RequestMapping("/listAllPaper")
     @ResponseBody
@@ -40,8 +45,9 @@ public class PaperController {
     }
 
     /**
-     * 增加试卷
+     * 发布试卷
      * @param paperName 试卷名称
+     * @return 试卷编号
      */
     @ResponseBody
     @RequestMapping("/addPaper")
@@ -52,6 +58,12 @@ public class PaperController {
             paper.setPaperName(paperName);
             paperService.addPaper(paper);
             paperId = paperService.queryPaperIdByName(paperName).getPaperId();
+
+            Connect connect = new Connect();
+            System.out.println(paperId);
+            connect.setPaperId(paperId);
+            connect.setPaperDetailId(0);
+            connectService.addConnect(connect);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("增加试卷失败！");
@@ -69,6 +81,7 @@ public class PaperController {
         int paperId = Integer.parseInt(paperIdStr);
         try {
             paperService.deletePaper(paperId);
+            System.out.println("删除试卷成功！");
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("删除试卷失败！");
@@ -86,10 +99,10 @@ public class PaperController {
         int paperId = Integer.parseInt(paperIdStr);
         try {
             Paper paper = new Paper();
-
             paper.setPaperId(paperId);
             paper.setPaperName(paperName);
             paperService.updatePaper(paper);
+            System.out.println("修改试卷成功！");
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("修改试卷失败！");

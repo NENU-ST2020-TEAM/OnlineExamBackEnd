@@ -17,6 +17,11 @@ public class Paper {
      */
     private String paperName;
 
+    /**
+     * 出题方式选择(0:在线出题；1：从题库选题)
+     */
+    private String status;
+
     public Integer getPaperId() {
         return paperId;
     }
@@ -33,11 +38,20 @@ public class Paper {
         this.paperName = paperName;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Paper{" +
                 "paperId=" + paperId +
                 ", paperName='" + paperName + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

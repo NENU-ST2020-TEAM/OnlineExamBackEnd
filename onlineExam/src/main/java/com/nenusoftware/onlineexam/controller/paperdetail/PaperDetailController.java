@@ -3,7 +3,6 @@ package com.nenusoftware.onlineexam.controller.paperdetail;
 import com.alibaba.fastjson.JSONArray;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,54 +31,74 @@ public class PaperDetailController {
      */
     @ResponseBody
     @RequestMapping("/listAllPaperDetail")
-    public List listAllPaperDetail(){
-        List paperDetailList = new ArrayList<>();
+    public List<PaperDetail> listAllPaperDetail(){
+        String choiceType = "选择题";
+        String judgeType = "判断题";
+        String completionType = "填空题";
+        String shortAnswerType = "简答题";
+        List<PaperDetail> choiceList = null;
+        List<PaperDetail> judgeList = null;
+        List<PaperDetail> completionList = null;
+        List<PaperDetail> shortAnswerList = null;
         try {
-            paperDetailList = paperDetailService.listAllPaperDetail();
+            choiceList = paperDetailService.queryExerciseByTypes(choiceType);
+            judgeList = paperDetailService.queryExerciseByTypes(judgeType);
+            completionList = paperDetailService.queryExerciseByTypes(completionType);
+            shortAnswerList = paperDetailService.queryExerciseByTypes(shortAnswerType);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return paperDetailList;
+        assert judgeList != null;
+        choiceList.addAll(judgeList);
+        assert completionList != null;
+        choiceList.addAll(completionList);
+        assert shortAnswerList != null;
+        choiceList.addAll(shortAnswerList);
+        return choiceList;
     }
 
-    /**
-     * 根据试卷编号列出试卷详细信息
-     * @param paperIdStr 试卷编号
-     * @return 返回List形式的试卷详细信息
-     */
-    @ResponseBody
-    @RequestMapping("/listPaperDetailByPaperId")
-    public List listPaperDetailByPaperId(String paperIdStr){
-        int paperId = Integer.parseInt(paperIdStr);
-        List paperDetailList = new ArrayList<>();
+//    /**
+//     * 根据试卷编号列出试卷详细信息
+//     * @param paperIdStr 试卷编号
+//     * @return 返回List形式的试卷详细信息
+//     */
+//    @ResponseBody
+//    @RequestMapping("/listPaperDetailByPaperId")
+//    public List<PaperDetail> listPaperDetailByPaperId(String paperIdStr){
+//        int paperId = Integer.parseInt(paperIdStr);
+//        List<PaperDetail> paperDetailList = new ArrayList<>();
+//        try {
+//            paperDetailList = paperDetailService.listPaperDetailByPaperId(paperId);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return paperDetailList;
+//    }
 
-        try {
-            paperDetailList = paperDetailService.listPaperDetailByPaperId(paperId);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return paperDetailList;
-    }
-
     /**
-     * 增加试卷试题详细信息
-     * @param exerciseTypeStr 题目类型(0:选择题，1：判断题，2：填空题：3：主观题 )
+     * 增加试题详细信息
      * @param contentStr 题目内容
      * @param typeAStr 选项 A
      * @param typeBStr 选项 B
      * @param typeCStr 选项 C
      * @param typeDStr 选项 D
      * @param answerStr 题目答案
+     * @param answer2 得分点 2
+     * @param answer3 得分点 3
+     * @param exerciseTypeStr 题目类型(0:选择题，1：判断题，2：填空题：3：简答题 )
      * @param scoreStr 题目分值
+     * @return 试题库题目编号
      * @throws Exception
      */
     @ResponseBody
     @RequestMapping("/addPaperDetail")
-    public void addPaperDetail(String exerciseTypeStr,String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String answer2, String answer3, String scoreStr) throws Exception{
+    public int addPaperDetail(String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String answer2, String answer3, String exerciseTypeStr, String scoreStr) throws Exception{
         PaperDetail paperDetail = new PaperDetail();
+
         int exerciseType = Integer.parseInt(exerciseTypeStr);
         //int exerciseId = Integer.parseInt(exerciseIdStr);
         int score = Integer.parseInt(scoreStr);
+
         paperDetail.setContent(contentStr);
         //paperDetail.setExerciseId(exerciseId);
         if(exerciseType == 0){
@@ -104,11 +123,14 @@ public class PaperDetailController {
         paperDetail.setAnswer3(answer3);
         paperDetail.setScore(score);
         paperDetailService.addPaperDetail(paperDetail);
+        int paperDetailId = paperDetailService.queryIdByContent(contentStr).getPaperDetailId();
+        System.out.println("增加试题成功！");
+        return paperDetailId;
     }
 
     /**
-     * 删除试卷详细信息
-     * @param paperIdStr 试卷详细信息编号
+     * 删除题目
+     * @param paperIdStr 题目编号
      */
     @ResponseBody
     @RequestMapping("/deletePaperDetail")
@@ -116,58 +138,60 @@ public class PaperDetailController {
         int paperId = Integer.parseInt(paperIdStr);
         try {
             paperDetailService.deletePaperDetail(paperId);
+            System.out.println("删除题目信息失败!");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("删除试卷题目信息失败!");
+            System.out.println("删除题目信息失败!");
         }
     }
 
     /**
-     * 修改试卷详细信息
-     * @param paperDetailIdStr 试卷详细信息编号
+     * 根据试题编号修改试题详细信息
+     * @param paperDetailIdStr 试题编号
      * @param contentStr 题目内容
-     * @param typeAStr 选项A
-     * @param typeBStr 选项B
-     * @param typeCStr 选项C
-     * @param typeDStr 选项D
+     * @param typeAStr 选项 A
+     * @param typeBStr 选项 B
+     * @param typeCStr 选项 C
+     * @param typeDStr 选项 D
      * @param answerStr 题目答案
+     * @param answerStr2 得分点 2
+     * @param answerStr3 得分点 3
      * @param scoreStr 题目分值
      */
     @ResponseBody
     @RequestMapping("/updatePaperDetail")
-    public void updatePaperDetail(String paperDetailIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String scoreStr){
+    public void updatePaperDetail(String paperDetailIdStr, String contentStr, String typeAStr, String typeBStr, String typeCStr, String typeDStr, String answerStr, String answerStr2, String answerStr3, String scoreStr){
         int paperDetailId = Integer.parseInt(paperDetailIdStr);
-//        int paperId = Integer.parseInt(paperIdStr);
-//        int exerciseId = Integer.parseInt(exerciseIdStr);
         int score = Integer.parseInt(scoreStr);
         try {
             PaperDetail paperDetail = new PaperDetail();
-
-//            paperDetail.setPaperId(paperId);
-//            paperDetail.setExerciseId(exerciseId);
+            paperDetail.setPaperDetailId(paperDetailId);
             paperDetail.setContent(contentStr);
             paperDetail.setTypeA(typeAStr);
             paperDetail.setTypeB(typeBStr);
             paperDetail.setTypeC(typeCStr);
             paperDetail.setTypeD(typeDStr);
             paperDetail.setAnswer(answerStr);
+            paperDetail.setAnswer2(answerStr2);
+            paperDetail.setAnswer3(answerStr3);
             paperDetail.setScore(score);
-            paperDetailService.deletePaperDetail(paperDetailId);
+            paperDetailService.updatePaperDetail(paperDetail);
+            System.out.println("修改题目信息成功!");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("修改试卷题目信息失败!");
+            System.out.println("修改题目信息失败!");
         }
     }
 
     /**
-     * 模糊查询（查询试卷题目的内容或类型）
+     * 模糊查询（查询题目内容或类型）
      * @param keyStr 输入查询的关键字
-     * @return 返回List形式的试卷详细信息
+     * @return 返回List形式的题目详细信息
      * @throws Exception
      */
     @ResponseBody
     @RequestMapping("queryPaperDetail")
-    public List queryPaperDetail(String keyStr) throws Exception {
+    public List<PaperDetail> queryPaperDetail(String keyStr) throws Exception {
         List<PaperDetail> paperDetailList = new ArrayList<>();
         paperDetailList = paperDetailService.queryPaperDetail(keyStr);
         return paperDetailList;

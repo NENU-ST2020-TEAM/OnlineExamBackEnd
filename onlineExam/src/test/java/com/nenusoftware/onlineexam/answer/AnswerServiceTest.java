@@ -39,13 +39,9 @@ public class AnswerServiceTest {
 //        System.out.println(answerService.addAnswer(answer));
 //    }
 
-
-
     @Test
     public void testDeleteAnswer() throws Exception{
         System.out.println(answerService.deleteAnswer(3));
     }
-
-
 
 }

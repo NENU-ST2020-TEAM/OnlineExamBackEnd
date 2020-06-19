@@ -72,11 +72,6 @@ public class PaperDetail {
      */
     private Integer score;
 
-    /**
-     * 试卷名称
-     */
-    private String paperName;
-
     public Integer getPaperDetailId() {
         return paperDetailId;
     }
@@ -165,14 +160,6 @@ public class PaperDetail {
         this.score = score;
     }
 
-    public String getPaperName() {
-        return paperName;
-    }
-
-    public void setPaperName(String paperName) {
-        this.paperName = paperName;
-    }
-
     public String getAnswer2() {
         return answer2;
     }
@@ -205,7 +192,6 @@ public class PaperDetail {
                 ", answer3='" + answer3 + '\'' +
                 ", exerciseType='" + exerciseType + '\'' +
                 ", score=" + score +
-                ", paperName='" + paperName + '\'' +
                 '}';
     }
 }

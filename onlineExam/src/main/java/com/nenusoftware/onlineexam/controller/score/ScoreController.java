@@ -140,5 +140,4 @@ public class ScoreController {
         }
         return scoreList;
     }
-
 }
