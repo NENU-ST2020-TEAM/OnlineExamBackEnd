@@ -6,6 +6,8 @@ import com.nenusoftware.onlineexam.service.paper.PaperService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class PaperServiceImpl implements PaperService {
      * @throws Exception
      */
     @Override
-    public List<Paper> listAllPaper() throws Exception{
-        List<Paper> paperList = Collections.emptyList();
+    public ArrayList<Paper> listAllPaper() throws Exception{
+        ArrayList<Paper> paperList = new ArrayList<>();
         paperList = paperMapper.listAllPaper();
         return paperList;
     }
@@ -39,7 +41,7 @@ public class PaperServiceImpl implements PaperService {
      * @throws Exception
      */
     @Override
-    public List<Paper> listPublishPaper(int status) throws Exception{
+    public ArrayList<Paper> listPublishPaper(int status) throws Exception{
         return paperMapper.listPublishPaper(status);
     }
 

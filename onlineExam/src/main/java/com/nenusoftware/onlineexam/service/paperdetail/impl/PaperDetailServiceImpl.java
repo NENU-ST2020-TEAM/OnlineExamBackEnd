@@ -51,12 +51,14 @@ public class PaperDetailServiceImpl implements PaperDetailService {
         for (PaperDetail detail : paperDetailList) {
             PaperDetail paperDetail = new PaperDetail();
             paperDetail = detail;
-            String str, str1, str2, str3;
-            str1 = paperDetail.getAnswer();
-            str2 = paperDetail.getAnswer2();
-            str3 = paperDetail.getAnswer3();
-            str = "得分点为：" + str1 + " " + str2 + " " + str3;
-            paperDetail.setAnswer(str);
+            if(paperDetail.getExerciseType().equals("简答题")){
+                String str, str1, str2, str3;
+                str1 = paperDetail.getAnswer();
+                str2 = paperDetail.getAnswer2();
+                str3 = paperDetail.getAnswer3();
+                str = "得分点为：" + str1 + " " + str2 + " " + str3;
+                paperDetail.setAnswer(str);
+            }
         }
         return paperDetailList;
     }
@@ -188,14 +190,16 @@ public class PaperDetailServiceImpl implements PaperDetailService {
     }
 
     @Override
-    public int judgeQuestion(JSONArray jsonArray, int userId, int paperId) throws Exception{
+    public int judgeQuestion(JSONArray jsonArray, int userId) throws Exception{
         int result = 0;
+        String paperIdStr = jsonArray.getJSONObject(0).getString("paperId");
+        int paperId = Integer.parseInt(paperIdStr);
         try{
             for(int i=0;i<jsonArray.size();i++){
                 Answer answer = new Answer();
                 PaperDetail paperDetail = new PaperDetail();
                 String pdid = jsonArray.getJSONObject(i).getString("paperDetailId");
-                String solution = jsonArray.getJSONObject(i).getString("answer");
+                String solution = jsonArray.getJSONObject(i).getString("solution");
                 int paperDetailId = Integer.parseInt(pdid);
                 paperDetail = queryQuestion(paperDetailId);
                 String type = paperDetail.getExerciseType();
@@ -203,7 +207,7 @@ public class PaperDetailServiceImpl implements PaperDetailService {
                 answer.setSolution(solution);
                 answer.setRight(paperDetail.getAnswer());
                 answer.setScore(paperDetail.getScore());
-                int score = answer.getScore();
+                int score = paperDetail.getScore();
                 if(type.equals("简答题")){
                     int index1 = solution.indexOf(paperDetail.getAnswer());
                     int index2 = solution.indexOf(paperDetail.getAnswer2());

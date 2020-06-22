@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public interface PaperMapper {
      * @return 返回List形式的试卷信息
      * @throws Exception
      */
-    public List<Paper> listAllPaper() throws Exception;
+    public ArrayList<Paper> listAllPaper() throws Exception;
 
     /**
      * 列出所有已发布试卷
@@ -29,7 +31,7 @@ public interface PaperMapper {
      * @return 返回 List形式的试卷信息
      * @throws Exception
      */
-    public List<Paper> listPublishPaper(@Param("status") int status) throws Exception;
+    public ArrayList<Paper> listPublishPaper(@Param("status") int status) throws Exception;
 
     /**
      * 增加试卷

@@ -2,6 +2,7 @@ package com.nenusoftware.onlineexam.service.user;
 
 import com.nenusoftware.onlineexam.entity.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public interface UserService {
      * @return 返回List形式的用户信息
      * @throws Exception
      */
-    public List<User> listAllUser() throws Exception;
+    public ArrayList<User> listAllUser() throws Exception;
 
     /**
      * 增加用户（注册方法）
@@ -81,6 +82,6 @@ public interface UserService {
      * @return 返回List形式的用户信息
      * @throws Exception
      */
-    public List<User> listUserById(int userId) throws Exception;
+    public ArrayList<User> listUserById(int userId) throws Exception;
 
 }

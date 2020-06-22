@@ -6,6 +6,7 @@ import com.nenusoftware.onlineexam.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class UserServiceImpl implements UserService {
      * @throws Exception
      */
     @Override
-    public List<User> listAllUser() throws Exception{
-        List<User> userList = Collections.emptyList();
+    public ArrayList<User> listAllUser() throws Exception{
+        ArrayList<User> userList = new ArrayList<>();
         userList = userMapper.listAllUser();
         return userList;
     }
@@ -122,8 +123,8 @@ public class UserServiceImpl implements UserService {
      * @throws Exception
      */
     @Override
-    public List<User> listUserById(int userId) throws Exception{
-        List<User> userList = Collections.emptyList();
+    public ArrayList<User> listUserById(int userId) throws Exception{
+        ArrayList<User> userList = new ArrayList<>();
         userList = userMapper.listUserById(userId);
         return userList;
     }

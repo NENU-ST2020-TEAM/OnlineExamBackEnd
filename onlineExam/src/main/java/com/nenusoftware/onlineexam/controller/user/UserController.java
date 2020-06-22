@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public class UserController {
 
     @Resource
     UserService userService;
+
+    boolean flag = false;
 
 //    @RequestMapping("/login")
 //    public String login(@RequestParam("username")String username, @RequestParam("password")String password, ModelMap map) throws Exception {
@@ -133,10 +136,18 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("listAllUser")
-    public List<User> listAllArticle(){
-        List<User> userList = null;
+    public ArrayList<User> listAllUser(HttpServletRequest request){
+        ArrayList<User> userList = new ArrayList<>();
+        User user = new User();
         try {
-            userList = userService.listAllUser();
+            int result = JudgePower(request);
+            if(result == 2 || result == 1){
+                userList = userService.listAllUser();
+            }
+            else{
+                user.setUsername("您未登录或没有权限");
+                userList.add(0,user);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -151,12 +162,19 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/listUserById")
-    public List<User> listUserById(HttpServletRequest request) throws Exception {
-        List<User> userList = null;
-        HttpSession session = request.getSession();
-        String username = String.valueOf(session.getAttribute("usernameSession"));
-        int userId = userService.queryIdByUsername(username).getUserId();
-        userList = userService.listUserById(userId);
+    public ArrayList<User> listUserById(HttpServletRequest request) throws Exception {
+        ArrayList<User> userList = new ArrayList<>();
+        HttpSession session = request.getSession(flag);
+        if(session != null){
+            String username = String.valueOf(session.getAttribute("usernameSession"));
+            int userId = userService.queryIdByUsername(username).getUserId();
+            userList = userService.listUserById(userId);
+        }
+        else{
+            User user = new User();
+            user.setUsername("请先登录");
+            userList.add(user);
+        }
         return userList;
     }
 
@@ -168,9 +186,10 @@ public class UserController {
     @RequestMapping("/exit")
     @ResponseBody
     public void exit(HttpServletRequest request) throws Exception{
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(flag);
         session.removeAttribute("usernameSession");
         System.out.println("退出成功");
+
     }
 
 //    /**
@@ -241,6 +260,40 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 判断用户是否有权限
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/JudgePower")
+    public int JudgePower(HttpServletRequest request){
+        int result = 0;
+        try{
+            HttpSession session = request.getSession(flag);
+            if(session == null){
+                result = -1;
+                return result;
+            }
+            else{
+                String username = String.valueOf(session.getAttribute("usernameSession"));
+                int power = userService.queryByName(username).getPower();
+                if(power == 1){
+                    result = 1;
+                }
+                else if(power == 2){
+                    result = 2;
+                }
+                else if(power == 0){
+                    result = 0;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
 //    /**

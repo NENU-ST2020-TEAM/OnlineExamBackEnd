@@ -90,7 +90,7 @@ public interface PaperDetailService {
      * @return
      * @throws Exception
      */
-    public int judgeQuestion(JSONArray jsonArray, int userId, int paperId) throws Exception;
+    public int judgeQuestion(JSONArray jsonArray, int userId) throws Exception;
 
     /**
      * 根据试题内容获取题目编号

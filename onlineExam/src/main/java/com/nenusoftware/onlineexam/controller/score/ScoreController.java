@@ -93,7 +93,6 @@ public class ScoreController {
         HttpSession session = request.getSession();
         String username = String.valueOf(session.getAttribute("usernameSession"));
         int userId = userService.queryIdByUsername(username).getUserId();
-
         List<Score> scoreList = null;
         try {
             scoreList = scoreService.queryScoreByUser(userId);

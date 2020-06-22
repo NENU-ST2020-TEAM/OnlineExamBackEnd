@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author : kongyy
  * @time : 2020/6/17 18:22
@@ -28,4 +31,17 @@ public class WrongServiceTest {
         System.out.println(wrongService.deleteWrong(4));
     }
 
+    @Test
+    public void testFunc() throws Exception{
+//        Date date = new Date();
+//        System.out.println(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+//        System.out.println(calendar.get(Calendar.YEAR));  //获取年份
+        System.out.println(calendar.get(Calendar.MONTH));  //获取月份
+//        System.out.println(calendar.get(Calendar.DATE));  //获取日
+//        System.out.println(calendar.get(Calendar.HOUR_OF_DAY)); //时（24小时制）
+//        System.out.println(calendar.get(Calendar.MINUTE));  //分
+//        System.out.println(calendar.get(Calendar.SECOND));  //秒
+    }
 }

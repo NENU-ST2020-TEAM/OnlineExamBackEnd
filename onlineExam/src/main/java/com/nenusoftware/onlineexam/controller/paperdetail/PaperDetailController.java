@@ -3,12 +3,15 @@ package com.nenusoftware.onlineexam.controller.paperdetail;
 import com.alibaba.fastjson.JSONArray;
 import com.nenusoftware.onlineexam.entity.paperdetail.PaperDetail;
 import com.nenusoftware.onlineexam.service.paperdetail.PaperDetailService;
+import com.nenusoftware.onlineexam.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,9 @@ public class PaperDetailController {
     @Resource
     PaperDetailService paperDetailService;
 
+    @Resource
+    UserService userService;
+
     /**
      * 列出试题库所有试题详细信息
      * @return 返回 List形式的试卷详细信息
@@ -32,29 +38,23 @@ public class PaperDetailController {
     @ResponseBody
     @RequestMapping("/listAllPaperDetail")
     public List<PaperDetail> listAllPaperDetail(){
-        String choiceType = "选择题";
-        String judgeType = "判断题";
-        String completionType = "填空题";
-        String shortAnswerType = "简答题";
-        List<PaperDetail> choiceList = null;
-        List<PaperDetail> judgeList = null;
-        List<PaperDetail> completionList = null;
-        List<PaperDetail> shortAnswerList = null;
+//        String exerciseType = null;
+//        if("0".equals(exerciseTypeStr)){
+//            exerciseType = "选择题";
+//        }else if("1".equals(exerciseTypeStr)){
+//            exerciseType = "判断题";
+//        }else if("2".equals(exerciseTypeStr)){
+//            exerciseType = "填空题";
+//        }else if("3".equals(exerciseTypeStr)){
+//            exerciseType = "简答题";
+//        }
+        List<PaperDetail> paperDetailList = null;
         try {
-            choiceList = paperDetailService.queryExerciseByTypes(choiceType);
-            judgeList = paperDetailService.queryExerciseByTypes(judgeType);
-            completionList = paperDetailService.queryExerciseByTypes(completionType);
-            shortAnswerList = paperDetailService.queryExerciseByTypes(shortAnswerType);
+            paperDetailList = paperDetailService.listAllPaperDetail();
         }catch (Exception e){
             e.printStackTrace();
         }
-        assert judgeList != null;
-        choiceList.addAll(judgeList);
-        assert completionList != null;
-        choiceList.addAll(completionList);
-        assert shortAnswerList != null;
-        choiceList.addAll(shortAnswerList);
-        return choiceList;
+        return paperDetailList;
     }
 
 //    /**
@@ -215,21 +215,21 @@ public class PaperDetailController {
     /**
      * 前端传回做题信息，进行判分，并将错误的题目存入错题集中
      * @param jsonString
-     * @param userIdStr
      * @param paperIdStr
      * @return
      */
     @ResponseBody
     @RequestMapping("/judgeQuestion")
-    public int judgeQuestion(String jsonString, String userIdStr, String paperIdStr){
+    public int judgeQuestion(String jsonString, String paperIdStr, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String username = String.valueOf(session.getAttribute("usernameSession"));
         int result = 0;
         //String jsonString = "[{\"answer\":\"后置双摄\",\"paperDetailId\":\"24\"}, {\"answer\":\"A\",\"paperDetailId\":\"11\"},{\"answer\":\"错\",\"paperDetailId\":\"3\"}]";
         try{
-            int userId = Integer.parseInt(userIdStr);
+            int userId = userService.queryIdByUsername(username).getUserId();
             int paperId = Integer.parseInt(paperIdStr);
             JSONArray jsonArray = JSONArray.parseArray(jsonString);
-            result = paperDetailService.judgeQuestion(jsonArray, userId, paperId);
-
+            result = paperDetailService.judgeQuestion(jsonArray, userId);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println("得出成绩失败");

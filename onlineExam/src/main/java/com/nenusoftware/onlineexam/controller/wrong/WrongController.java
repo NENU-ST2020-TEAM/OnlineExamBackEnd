@@ -1,6 +1,7 @@
 package com.nenusoftware.onlineexam.controller.wrong;
 
 import com.nenusoftware.onlineexam.entity.wrong.Wrong;
+import com.nenusoftware.onlineexam.service.user.UserService;
 import com.nenusoftware.onlineexam.service.wrong.WrongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,12 +26,17 @@ public class WrongController {
     @Resource
     WrongService wrongService;
 
+    @Resource
+    UserService userService;
+
     @ResponseBody
     @RequestMapping("/listWrongById")
-    public List<Wrong> listWrongById(String userIdStr){
+    public List<Wrong> listWrongById(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String username = String.valueOf(session.getAttribute("usernameSession"));
         List<Wrong> wrongList = Collections.emptyList();
         try{
-            int userId = Integer.parseInt(userIdStr);
+            int userId = userService.queryIdByUsername(username).getUserId();
             wrongList = wrongService.listWrongByUserId(userId);
         }catch (Exception e){
             e.printStackTrace();

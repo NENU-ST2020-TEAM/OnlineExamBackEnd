@@ -72,6 +72,8 @@ public class PaperDetail {
      */
     private Integer score;
 
+    private String solution;
+
     public Integer getPaperDetailId() {
         return paperDetailId;
     }
@@ -176,6 +178,14 @@ public class PaperDetail {
         this.answer3 = answer3;
     }
 
+    public String getSolution() {
+        return solution;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution;
+    }
+
     @Override
     public String toString() {
         return "PaperDetail{" +
@@ -192,6 +202,7 @@ public class PaperDetail {
                 ", answer3='" + answer3 + '\'' +
                 ", exerciseType='" + exerciseType + '\'' +
                 ", score=" + score +
+                ", solution='" + solution + '\'' +
                 '}';
     }
 }

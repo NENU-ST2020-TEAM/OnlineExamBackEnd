@@ -1,5 +1,6 @@
 package com.nenusoftware.onlineexam.controller.superuser;
 
+import com.nenusoftware.onlineexam.controller.user.UserController;
 import com.nenusoftware.onlineexam.service.superuser.SuperUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author : kongyy
@@ -20,6 +22,9 @@ public class SuperUserController {
     @Resource
     SuperUserService superUserService;
 
+    @Resource
+    UserController userController;
+
 
     /**
      * 根据用户id删除用户
@@ -27,14 +32,19 @@ public class SuperUserController {
      */
     @ResponseBody
     @RequestMapping("/deleteUser")
-    public void deleteUser(String userIdStr){
-        int userId = Integer.parseInt(userIdStr);
-        try {
-            superUserService.deleteUser(userId);
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("删除失败！");
+    public String  deleteUser(String userIdStr, HttpServletRequest request){
+        int result = userController.JudgePower(request);
+        if(result == 2){
+            int userId = Integer.parseInt(userIdStr);
+            try {
+                superUserService.deleteUser(userId);
+                return "删除成功！";
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("删除失败！");
+            }
         }
+        return "您未登录或没有权限";
     }
 
     /**
@@ -43,13 +53,18 @@ public class SuperUserController {
      */
     @ResponseBody
     @RequestMapping("/updateUserPower")
-    public void updateUserPower(String userIdStr){
+    public String updateUserPower(String userIdStr, HttpServletRequest request){
+        int result = userController.JudgePower(request);
         int userId = Integer.parseInt(userIdStr);
-        try {
-            superUserService.updateUserPower(userId);
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("更新失败！");
+        if(result == 2){
+            try {
+                superUserService.updateUserPower(userId);
+                return "修改成功";
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("更新失败！");
+            }
         }
+        return "您未登录或没有权限";
     }
 }

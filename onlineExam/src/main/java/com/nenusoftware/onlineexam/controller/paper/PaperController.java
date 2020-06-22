@@ -1,5 +1,6 @@
 package com.nenusoftware.onlineexam.controller.paper;
 
+import com.nenusoftware.onlineexam.controller.user.UserController;
 import com.nenusoftware.onlineexam.entity.connect.Connect;
 import com.nenusoftware.onlineexam.entity.paper.Paper;
 import com.nenusoftware.onlineexam.service.connect.ConnectService;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,18 +32,28 @@ public class PaperController {
     @Resource
     ConnectService connectService;
 
+    @Resource
+    UserController userController;
     /**
      * 列出所有试卷
      * @return 返回 List形式的试卷信息
      */
     @RequestMapping("/listAllPaper")
     @ResponseBody
-    public List<Paper> listAllPaper(){
-        List<Paper> paperList = null;
-        try {
-            paperList = paperService.listAllPaper();
-        }catch (Exception e){
-            e.printStackTrace();
+    public ArrayList<Paper> listAllPaper(HttpServletRequest request){
+        ArrayList<Paper> paperList = new ArrayList<>();
+        int result = userController.JudgePower(request);
+        if(result == 1 || result == 2){
+            try {
+                paperList = paperService.listAllPaper();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Paper paper = new Paper();
+            paper.setPaperName("您未登录或没有权限");
+            paperList.add(paper);
         }
         return paperList;
     }
@@ -50,12 +64,20 @@ public class PaperController {
      */
     @RequestMapping("/listPublishPaper")
     @ResponseBody
-    public List<Paper> listPublishPaper(){
-        List<Paper> paperList = null;
-        try {
-            paperList = paperService.listPublishPaper(1);
-        }catch (Exception e){
-            e.printStackTrace();
+    public List<Paper> listPublishPaper(HttpServletRequest request){
+        int result = userController.JudgePower(request);
+        ArrayList<Paper> paperList = new ArrayList<>();
+        if(result != -1){
+            try {
+                paperList = paperService.listPublishPaper(1);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Paper paper = new Paper();
+            paper.setPaperName("您未登录!");
+            paperList.add(paper);
         }
         return paperList;
     }
@@ -67,25 +89,30 @@ public class PaperController {
      */
     @ResponseBody
     @RequestMapping("/addPaper")
-    public int addPaper(String paperName){
-        int paperId = 0;
-        try {
-            Paper paper = new Paper();
-            paper.setPaperName(paperName);
-            paper.setStatus(0);
-            paper.setBeginTime(null);
-            paper.setDuration(null);
-            paperService.addPaper(paper);
-            paperId = paperService.queryPaperIdByName(paperName).getPaperId();
-
-            Connect connect = new Connect();
-            System.out.println(paperId);
-            connect.setPaperId(paperId);
-            connect.setPaperDetailId(0);
-            connectService.addConnect(connect);
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("增加试卷失败！");
+    public int addPaper(String paperName, HttpServletRequest request){
+        int result = userController.JudgePower(request);
+        int paperId = -1;
+        if(result == 2){
+            try {
+                Paper paper = new Paper();
+                paper.setPaperName(paperName);
+                paper.setStatus(0);
+                paper.setBeginTime(null);
+                paper.setDuration(null);
+                paperService.addPaper(paper);
+                paperId = paperService.queryPaperIdByName(paperName).getPaperId();
+                Connect connect = new Connect();
+                System.out.println(paperId);
+                connect.setPaperId(paperId);
+                connect.setPaperDetailId(0);
+                connectService.addConnect(connect);
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("增加试卷失败！");
+            }
+        }
+        else{
+            System.out.println("您未登录或没有权限");
         }
         return paperId;
     }
@@ -96,15 +123,21 @@ public class PaperController {
      */
     @ResponseBody
     @RequestMapping("/deletePaper")
-    public void deletePaper(String paperIdStr) {
+    public String deletePaper(String paperIdStr, HttpServletRequest request) {
+        int result = userController.JudgePower(request);
         int paperId = Integer.parseInt(paperIdStr);
-        try {
-            paperService.deletePaper(paperId);
-            System.out.println("删除试卷成功！");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("删除试卷失败！");
+        if(result == 2){
+            try {
+                paperService.deletePaper(paperId);
+                System.out.println("删除试卷成功！");
+                return "删除成功！";
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("删除试卷失败！");
+            }
+
         }
+        return "您未登录或没有权限！";
     }
 
     /**

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public interface UserMapper {
      * @return 返回List形式的用户信息
      * @throws Exception
      */
-    public List<User> listAllUser() throws Exception;
+    public ArrayList<User> listAllUser() throws Exception;
 
     /**
      * 增加用户（注册方法）
@@ -86,6 +87,6 @@ public interface UserMapper {
      * @return 返回List形式的用户信息
      * @throws Exception
      */
-    public List<User> listUserById(@Param("userId") int userId) throws Exception;
+    public ArrayList<User> listUserById(@Param("userId") int userId) throws Exception;
 
 }

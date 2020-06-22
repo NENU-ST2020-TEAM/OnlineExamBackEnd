@@ -3,6 +3,8 @@ package com.nenusoftware.onlineexam.service.paper;
 import com.nenusoftware.onlineexam.entity.paper.Paper;
 import org.apache.ibatis.annotations.Param;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public interface PaperService {
      * @return 返回 List形式的试卷信息
      * @throws Exception
      */
-    public List<Paper> listAllPaper() throws Exception;
+    public ArrayList<Paper> listAllPaper() throws Exception;
 
     /**
      * 列出所有已发布试卷
@@ -25,7 +27,7 @@ public interface PaperService {
      * @return 返回 List形式的试卷信息
      * @throws Exception
      */
-    public List<Paper> listPublishPaper(int status) throws Exception;
+    public ArrayList<Paper> listPublishPaper(int status) throws Exception;
 
     /**
      * 增加试卷
