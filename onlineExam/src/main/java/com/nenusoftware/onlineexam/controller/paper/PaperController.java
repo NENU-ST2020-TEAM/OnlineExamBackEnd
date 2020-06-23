@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,6 +181,7 @@ public class PaperController {
      * @param paperIdStr 试卷编号
      * @param beginTime 开始时间
      * @param duration 做题时长
+     * @param endTime 截止时间
      */
     @ResponseBody
     @RequestMapping("/publishPaper")
