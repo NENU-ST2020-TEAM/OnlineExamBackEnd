@@ -9,6 +9,7 @@
         <result property="paperName" column="paperName"/>
         <result property="status" column="status"/>
         <result property="beginTime" column="beginTime"/>
+        <result property="endTime" column="endTime"/>
         <result property="duration" column="duration"/>
     </resultMap>
 
@@ -48,7 +49,7 @@
     </select>
 
     <select id="queryPaperNameById" resultMap="Paper">
-        SELECT paperName
+        SELECT *
         FROM t_paper
         WHERE `paperId` LIKE #{paperId}
     </select>
@@ -61,7 +62,7 @@
 
     <update id="publishPaper">
         update t_paper
-        SET status = #{paper.status}, beginTime = #{paper.beginTime}, duration = #{paper.duration}
+        SET status = #{paper.status}, beginTime = #{paper.beginTime}, duration = #{paper.duration}, endTime = #{paper.endTime}
         WHERE paperId = #{paper.paperId}
     </update>
 </mapper>

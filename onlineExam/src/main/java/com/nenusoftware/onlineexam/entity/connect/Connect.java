@@ -22,6 +22,16 @@ public class Connect {
      */
     private Integer paperDetailId;
 
+    /**
+     * 剩余时间
+     */
+    private long leftover;
+
+    /**
+     * 备注
+     */
+    private String log;
+
     public Integer getId() {
         return id;
     }
@@ -46,12 +56,30 @@ public class Connect {
         this.paperDetailId = paperDetailId;
     }
 
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public long getLeftover() {
+        return leftover;
+    }
+
+    public void setLeftover(long leftover) {
+        this.leftover = leftover;
+    }
+
     @Override
     public String toString() {
         return "Connect{" +
                 "id=" + id +
                 ", paperId=" + paperId +
                 ", paperDetailId=" + paperDetailId +
+                ", leftover=" + leftover +
+                ", log='" + log + '\'' +
                 '}';
     }
 }

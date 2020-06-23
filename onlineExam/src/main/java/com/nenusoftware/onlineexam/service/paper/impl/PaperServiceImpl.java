@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -123,5 +125,17 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public boolean publishPaper(Paper paper) throws Exception{
         return paperMapper.publishPaper(paper);
+    }
+
+    @Override
+    public String[] extractTime(String str) throws Exception{
+        String time[] = new String[6];
+        time[0] = str.substring(str.indexOf(":")+1, str.lastIndexOf("年"));
+        time[1] = str.substring(str.indexOf("年")+1, str.lastIndexOf("月"));
+        time[2] = str.substring(str.indexOf("月")+1, str.lastIndexOf("日"));
+        time[3] = str.substring(str.indexOf("日")+1, str.lastIndexOf("时"));
+        time[4] = str.substring(str.indexOf("时")+1, str.lastIndexOf("分"));
+        time[5] = str.substring(str.indexOf("分")+1, str.lastIndexOf("秒"));
+        return time;
     }
 }

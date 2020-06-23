@@ -141,7 +141,7 @@ public class UserController {
         User user = new User();
         try {
             int result = JudgePower(request);
-            if(result == 2 || result == 1){
+            if(result == 2){
                 userList = userService.listAllUser();
             }
             else{

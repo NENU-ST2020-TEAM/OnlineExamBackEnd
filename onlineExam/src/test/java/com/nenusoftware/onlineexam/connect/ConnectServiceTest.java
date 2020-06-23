@@ -45,4 +45,16 @@
 //        connect.setPaperDetailId(paperDetailId);
 //        System.out.println(connectService.addConnect(connect));
 //    }
+//
+//    @Test
+//    public void testInTime() throws Exception{
+////        String str1 = "开始:1999年10月21日7时32分20秒";
+////        String str2 = "开始:2020年10月21日7时32分20秒";
+//        System.out.println(connectService.isInTheTime(2));
+//    }
+//
+//    @Test
+//    public void testLeftover() throws Exception{
+//        System.out.println(connectService.leftoverTime(2));
+//    }
 //}

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,5 +85,13 @@ public interface PaperService {
      * @throws Exception
      */
     public boolean publishPaper(Paper paper) throws Exception;
+
+    /**
+     * 提取字符串中的年月日时分秒并存入数组
+     * @param time
+     * @return
+     * @throws Exception
+     */
+    public String[] extractTime(String time) throws Exception;
 
 }

@@ -76,10 +76,21 @@
 //    @Test
 //    public void testPublishPaper() throws Exception{
 //        Paper paper = new Paper();
-//        paper.setPaperId(3);
-//        paper.setStatus(0);
-//        paper.setBeginTime("2020-06-08: 15:00");
-//        paper.setDuration("1.5小时");
+//        paper.setPaperId(2);
+//        paper.setStatus(1);
+//        paper.setBeginTime("开始:2020年6月8日15时0分0秒");
+//        paper.setDuration("120");
+//        paper.setEndTime("结束:2020年6月30日23时59分59秒");
 //        System.out.println(paperService.publishPaper(paper));
 //    }
+//
+////    @Test
+////    public void testConvertTime() throws Exception{
+////        String str = "开始:1999年10月21日7时32分20秒";
+////        int time[] = new int[6];
+////        time = paperService.extractTime(str);
+////        for(int i=0;i<6;i++){
+////            System.out.println(time[i]);
+////        }
+////    }
 //}

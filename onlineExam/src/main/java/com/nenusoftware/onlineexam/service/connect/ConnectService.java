@@ -28,4 +28,20 @@ public interface ConnectService {
      */
     public boolean addConnect(Connect connect) throws Exception;
 
+    /**
+     * 根据paperId查询试卷的开始时间与结束时间，判断当前时间是否在这时间段内
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    public boolean isInTheTime(int paperId) throws Exception;
+
+    /**
+     * 剩余的时间
+     * @param paperId
+     * @return
+     * @throws Exception
+     */
+    public long leftoverTime(int paperId) throws Exception;
+
 }

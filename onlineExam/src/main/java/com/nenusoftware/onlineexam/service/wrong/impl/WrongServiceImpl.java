@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class WrongServiceImpl implements WrongService {
      */
     @Override
     public List<Wrong> listWrongByUserId(int userId) throws Exception{
-        List<Wrong> wrongList = Collections.emptyList();
+        List<Wrong> wrongList = new LinkedList<>();
         wrongList = wrongMapper.listWrongByUserId(userId);
         return  wrongList;
     }

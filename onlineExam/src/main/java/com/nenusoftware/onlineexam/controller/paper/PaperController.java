@@ -92,7 +92,7 @@ public class PaperController {
     public int addPaper(String paperName, HttpServletRequest request){
         int result = userController.JudgePower(request);
         int paperId = -1;
-        if(result == 2){
+        if(result == 2 || result == 1){
             try {
                 Paper paper = new Paper();
                 paper.setPaperName(paperName);
@@ -185,7 +185,7 @@ public class PaperController {
      */
     @ResponseBody
     @RequestMapping("/publishPaper")
-    public void publishPaper(String paperIdStr, String beginTime, String duration) {
+    public void publishPaper(String paperIdStr, String beginTime, String duration, String endTime) {
         int paperId = Integer.parseInt(paperIdStr);
         try {
             Paper paper = new Paper();
@@ -193,6 +193,7 @@ public class PaperController {
             paper.setStatus(1);
             paper.setBeginTime(beginTime);
             paper.setDuration(duration);
+            paper.setEndTime(endTime);
             paperService.publishPaper(paper);
             System.out.println("发布试卷成功！");
         }catch (Exception e){

@@ -28,6 +28,11 @@ public class Paper {
     private String beginTime;
 
     /**
+     * 结束时间
+     */
+    private String endTime;
+
+    /**
      * 答题时长
      */
     private String duration;
@@ -72,6 +77,14 @@ public class Paper {
         this.duration = duration;
     }
 
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public String toString() {
         return "Paper{" +
@@ -79,6 +92,7 @@ public class Paper {
                 ", paperName='" + paperName + '\'' +
                 ", status=" + status +
                 ", beginTime='" + beginTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 ", duration='" + duration + '\'' +
                 '}';
     }

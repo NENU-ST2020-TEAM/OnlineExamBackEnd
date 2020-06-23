@@ -215,19 +215,17 @@ public class PaperDetailController {
     /**
      * 前端传回做题信息，进行判分，并将错误的题目存入错题集中
      * @param jsonString
-     * @param paperIdStr
      * @return
      */
     @ResponseBody
     @RequestMapping("/judgeQuestion")
-    public int judgeQuestion(String jsonString, String paperIdStr, HttpServletRequest request){
+    public int judgeQuestion(String jsonString,HttpServletRequest request){
         HttpSession session = request.getSession();
         String username = String.valueOf(session.getAttribute("usernameSession"));
         int result = 0;
         //String jsonString = "[{\"answer\":\"后置双摄\",\"paperDetailId\":\"24\"}, {\"answer\":\"A\",\"paperDetailId\":\"11\"},{\"answer\":\"错\",\"paperDetailId\":\"3\"}]";
         try{
             int userId = userService.queryIdByUsername(username).getUserId();
-            int paperId = Integer.parseInt(paperIdStr);
             JSONArray jsonArray = JSONArray.parseArray(jsonString);
             result = paperDetailService.judgeQuestion(jsonArray, userId);
         }catch (Exception e){
