@@ -125,7 +125,7 @@ public class PaperController {
     public String deletePaper(String paperIdStr, HttpServletRequest request) {
         int result = userController.JudgePower(request);
         int paperId = Integer.parseInt(paperIdStr);
-        if(result == 2){
+        if(result == 2 || result == 1){
             try {
                 paperService.deletePaper(paperId);
                 System.out.println("删除试卷成功！");
