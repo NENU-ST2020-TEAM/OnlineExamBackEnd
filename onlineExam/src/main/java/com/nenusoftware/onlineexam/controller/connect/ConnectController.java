@@ -1,5 +1,6 @@
 package com.nenusoftware.onlineexam.controller.connect;
 
+import com.nenusoftware.onlineexam.controller.user.UserController;
 import com.nenusoftware.onlineexam.entity.connect.Connect;
 import com.nenusoftware.onlineexam.service.connect.ConnectService;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class ConnectController {
     @Resource
     ConnectService connectService;
 
+    @Resource
+    UserController userController;
+
     /**
      * 通过试卷编号列出试卷详细信息
      * @param paperIdStr 试卷编号
@@ -32,7 +37,8 @@ public class ConnectController {
      */
     @RequestMapping("/listAllConnect")
     @ResponseBody
-    public List<Connect> listAllConnect(String paperIdStr, String exerciseTypeStr){
+    public List<Connect> listAllConnect(String paperIdStr, String exerciseTypeStr, HttpServletRequest request){
+        int result = userController.JudgePower(request);
         int paperId = Integer.parseInt(paperIdStr);
         String exerciseType = null;
         if("0".equals(exerciseTypeStr)){
@@ -53,25 +59,36 @@ public class ConnectController {
 //        String completionType = "填空题";
 //        String shortAnswerType = "简答题";
         List<Connect> connectList = new LinkedList<>();
-        try {
-            if(connectService.isInTheTime(paperId)){
+        if(result == 1){
+            try {
                 connectList = connectService.listAllConnect(paperId, exerciseType);
-                long leftover = connectService.leftoverTime(paperId);
-                Connect connect = new Connect();
-                connect.setLeftover(leftover);
-                connectList.add(connect);
+                return connectList;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        else if(result != -1){
+            try {
+                if(connectService.isInTheTime(paperId)){
+                    connectList = connectService.listAllConnect(paperId, exerciseType);
+                    long leftover = connectService.leftoverTime(paperId);
+                    Connect connect = new Connect();
+                    connect.setLeftover(leftover);
+                    connectList.add(connect);
 //                judgeList = connectService.listAllConnect(paperId, judgeType);
 //                completionList = connectService.listAllConnect(paperId, completionType);
 //                shortAnswerList = connectService.listAllConnect(paperId, shortAnswerType);
-                System.out.println("通过试卷编号列出试卷详细信息成功！");
-            }else{
-                Connect connect = new Connect();
-                connect.setLog("考试时间未到或您已过了考试时间");
-                connectList.add(connect);
+                    System.out.println("通过试卷编号列出试卷详细信息成功！");
+                }else{
+                    Connect connect = new Connect();
+                    connect.setLog("考试时间未到或您已过了考试时间");
+                    connectList.add(connect);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
+
 //        assert judgeList != null;
 //        choiceList.addAll(judgeList);
 //        assert completionList != null;
