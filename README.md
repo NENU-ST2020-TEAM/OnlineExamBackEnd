@@ -6,7 +6,10 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 
 ### 前端工具和环境
 - 开发工具：Microsoft VS Code x64 1.44.2
-- 版本控制工具：Git 
+- Node.js：V10.15.0
+- Vue.js：V2.5.21
+- yarn: V1.13.0
+- 版本控制工具：Git
 
 ### 后端工具和环境
 - 开发工具：IntelliJ IDEA 2020.1.1 x64
@@ -20,5 +23,21 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 - 本地：`localhost:8080`（本地跑需导入数据库文件）
 - 远程服务器：`120.26.186.88:8080`（前端Vue代码接口对接的是远程服务器端口）
 
-## 所用技术
->框架组合：Springboot + Vue.js 前后端分离模式
+## 关键技术
+>框架组合：SpringBoot + Vue.js 前后端分离模式
+
+## 前端
+- Vue.js
+- Element-UI组件
+- Axios 前后端分离
+
+## 后端
+- SpringBoot 框架
+- SpringMVC 开发模式
+- MyBatis 数据库操作工具
+- MySQL 数据库
+- Maven 版本控制
+- FastJson 解析Json数据
+- Junit 单元测试
+- 后台接口API: Swagger
+
