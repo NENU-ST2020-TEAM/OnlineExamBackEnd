@@ -33,6 +33,7 @@ public class ConnectController {
      * 通过试卷编号列出试卷详细信息
      * @param paperIdStr 试卷编号
      * @param exerciseTypeStr 题目类型
+     * @param request HTTP请求
      * @return 返回 List形式的试卷详细信息
      */
     @RequestMapping("/listAllConnect")
@@ -50,14 +51,6 @@ public class ConnectController {
         }else if("3".equals(exerciseTypeStr)){
             exerciseType = "简答题";
         }
-//        List<Connect> choiceList = null;
-//        List<Connect> judgeList = null;
-//        List<Connect> completionList = null;
-//        List<Connect> shortAnswerList = null;
-//        String choiceType = "选择题";
-//        String judgeType = "判断题";
-//        String completionType = "填空题";
-//        String shortAnswerType = "简答题";
         List<Connect> connectList = new LinkedList<>();
         if(result == 1){
             try {
@@ -75,9 +68,6 @@ public class ConnectController {
                     Connect connect = new Connect();
                     connect.setLeftover(leftover);
                     connectList.add(connect);
-//                judgeList = connectService.listAllConnect(paperId, judgeType);
-//                completionList = connectService.listAllConnect(paperId, completionType);
-//                shortAnswerList = connectService.listAllConnect(paperId, shortAnswerType);
                     System.out.println("通过试卷编号列出试卷详细信息成功！");
                 }else{
                     Connect connect = new Connect();
@@ -88,13 +78,6 @@ public class ConnectController {
                 e.printStackTrace();
             }
         }
-
-//        assert judgeList != null;
-//        choiceList.addAll(judgeList);
-//        assert completionList != null;
-//        choiceList.addAll(completionList);
-//        assert shortAnswerList != null;
-//        choiceList.addAll(shortAnswerList);
         return connectList;
     }
 
@@ -102,7 +85,6 @@ public class ConnectController {
      * 增加试卷详细信息
      * @param paperIdStr 试卷编号
      * @param paperDetailIdStr 试题编号
-     * @return
      */
     @ResponseBody
     @RequestMapping("/addConnect")

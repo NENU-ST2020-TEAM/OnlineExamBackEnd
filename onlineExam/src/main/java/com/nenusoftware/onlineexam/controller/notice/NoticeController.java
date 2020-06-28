@@ -15,9 +15,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author:Liangll
+ * @Author:Kongyy
  * @Description: NoticeController层（与前端页面进行交互）
- * @Date: 10:54 2019/5/16
+ * @Date: 15:54 2020/6/1
  */
 @CrossOrigin(allowCredentials = "true")
 @Controller
@@ -103,7 +103,6 @@ public class NoticeController {
     @RequestMapping("/updateNotice")
     public void updateNotice(String noticeIdStr, String title, String content, HttpServletRequest request) {
         int noticeId = Integer.parseInt(noticeIdStr);
-
         try {
             HttpSession session = request.getSession();
             String username = String.valueOf(session.getAttribute("usernameSession"));
@@ -128,6 +127,7 @@ public class NoticeController {
     /**
      * 公告的模糊查询（可查询公告标题和公告内容）
      * @param keyStr 输入查询的关键字
+     * @return 返回公告完整信息
      */
     @ResponseBody
     @RequestMapping("/queryNotice")
@@ -140,5 +140,4 @@ public class NoticeController {
         }
         return noticeList;
     }
-
 }

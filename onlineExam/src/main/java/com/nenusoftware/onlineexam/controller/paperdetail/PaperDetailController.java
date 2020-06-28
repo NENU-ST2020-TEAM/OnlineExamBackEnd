@@ -38,16 +38,6 @@ public class PaperDetailController {
     @ResponseBody
     @RequestMapping("/listAllPaperDetail")
     public List<PaperDetail> listAllPaperDetail(){
-//        String exerciseType = null;
-//        if("0".equals(exerciseTypeStr)){
-//            exerciseType = "选择题";
-//        }else if("1".equals(exerciseTypeStr)){
-//            exerciseType = "判断题";
-//        }else if("2".equals(exerciseTypeStr)){
-//            exerciseType = "填空题";
-//        }else if("3".equals(exerciseTypeStr)){
-//            exerciseType = "简答题";
-//        }
         List<PaperDetail> paperDetailList = null;
         try {
             paperDetailList = paperDetailService.listAllPaperDetail();
@@ -56,24 +46,6 @@ public class PaperDetailController {
         }
         return paperDetailList;
     }
-
-//    /**
-//     * 根据试卷编号列出试卷详细信息
-//     * @param paperIdStr 试卷编号
-//     * @return 返回List形式的试卷详细信息
-//     */
-//    @ResponseBody
-//    @RequestMapping("/listPaperDetailByPaperId")
-//    public List<PaperDetail> listPaperDetailByPaperId(String paperIdStr){
-//        int paperId = Integer.parseInt(paperIdStr);
-//        List<PaperDetail> paperDetailList = new ArrayList<>();
-//        try {
-//            paperDetailList = paperDetailService.listPaperDetailByPaperId(paperId);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return paperDetailList;
-//    }
 
     /**
      * 增加试题详细信息
@@ -88,7 +60,7 @@ public class PaperDetailController {
      * @param exerciseTypeStr 题目类型(0:选择题，1：判断题，2：填空题：3：简答题 )
      * @param scoreStr 题目分值
      * @return 试题库题目编号
-     * @throws Exception
+     * @throws Exception 报错信息
      */
     @ResponseBody
     @RequestMapping("/addPaperDetail")
@@ -187,7 +159,7 @@ public class PaperDetailController {
      * 模糊查询（查询题目内容或类型）
      * @param keyStr 输入查询的关键字
      * @return 返回List形式的题目详细信息
-     * @throws Exception
+     * @throws Exception 报错信息
      */
     @ResponseBody
     @RequestMapping("queryPaperDetail")
@@ -214,8 +186,8 @@ public class PaperDetailController {
 
     /**
      * 前端传回做题信息，进行判分，并将错误的题目存入错题集中
-     * @param jsonString
-     * @return
+     * @param jsonString 答题数据
+     * @return 结果
      */
     @ResponseBody
     @RequestMapping("/judgeQuestion")

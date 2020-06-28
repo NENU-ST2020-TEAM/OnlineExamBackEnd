@@ -8,7 +8,6 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 - 开发工具：Microsoft VS Code x64 1.44.2
 - Node.js：V10.15.0
 - Vue.js：V2.5.21
-- yarn: V1.13.0
 - 版本控制工具：Git
 
 ### 1.2 后端工具和环境

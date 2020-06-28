@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @Author:Liangll
  * @Description: PaperController层（与前端页面进行交互）
- * @Date: 15:54 2019/5/5
+ * @Date: 15:54 2020/6/5
  */
 @CrossOrigin(allowCredentials = "true")
 @Controller
@@ -33,8 +33,10 @@ public class PaperController {
 
     @Resource
     UserController userController;
+
     /**
      * 列出所有试卷
+     * @param request Http请求
      * @return 返回 List形式的试卷信息
      */
     @RequestMapping("/listAllPaper")
@@ -59,6 +61,7 @@ public class PaperController {
 
     /**
      * 列出所有已发布试卷 (1：发布；0：不发布)
+     * @param request HTTP请求头
      * @return 返回 List形式的试卷信息
      */
     @RequestMapping("/listPublishPaper")
@@ -84,6 +87,7 @@ public class PaperController {
     /**
      * 增加试卷
      * @param paperName 试卷名称
+     * @param request HTTP请求头
      * @return 试卷编号
      */
     @ResponseBody
@@ -119,6 +123,8 @@ public class PaperController {
     /**
      * 删除试卷
      * @param paperIdStr 试卷编号
+     * @param request HTTP请求头
+     * @return 报错信息
      */
     @ResponseBody
     @RequestMapping("/deletePaper")
@@ -163,6 +169,7 @@ public class PaperController {
     /**
      * 模糊查询（查询试卷名称）
      * @param keyStr 输入查询的关键字
+     * @return 返回试卷信息
      */
     @ResponseBody
     @RequestMapping("/queryPaperName")
