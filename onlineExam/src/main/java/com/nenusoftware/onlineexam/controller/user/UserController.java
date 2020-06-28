@@ -70,7 +70,7 @@ public class UserController {
     @ApiImplicitParam(paramType="login", name = "username", value = "用户名", required = true, dataType = "String")
     public String login(String username, String password, HttpServletRequest request) throws Exception {
         if(userService.queryByName(username) != null){
-            if(userService.checkPassword(username,password).size() != 0){
+            if(userService.checkPassword(username, password).size() != 0){
                 HttpSession session = request.getSession();
                 session.setAttribute("usernameSession",username);
                 System.out.println("登录成功！");

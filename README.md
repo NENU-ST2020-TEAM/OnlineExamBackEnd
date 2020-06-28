@@ -27,7 +27,7 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 >框架组合：SpringBoot + Vue.js 前后端分离模式
 
 ### 3.1 前端
-- Vue.js
+- Vue.js 框架
 - Element-UI组件
 - Axios 前后端分离
 
@@ -38,6 +38,7 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 - MySQL 数据库
 - Maven 版本控制
 - FastJson 解析Json数据
+- HTTP 请求头记录Session，判断用户属性
 - Junit 单元测试
 - 后台接口API: Swagger
 
