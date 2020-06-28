@@ -23,15 +23,15 @@ Back End of OnlineExamSystem for Software Quality Assurance and Testing course, 
 - 本地：`localhost:8080`（本地跑需导入数据库文件）
 - 远程服务器：`120.26.186.88:8080`（前端Vue代码接口对接的是远程服务器端口）
 
-### 2.1 关键技术
+## 3 关键技术
 >框架组合：SpringBoot + Vue.js 前后端分离模式
 
-### 2.2 前端
+### 3.1 前端
 - Vue.js
 - Element-UI组件
 - Axios 前后端分离
 
-### 2.3 后端
+### 3.2 后端
 - SpringBoot 框架
 - SpringMVC 开发模式
 - MyBatis 数据库操作工具
