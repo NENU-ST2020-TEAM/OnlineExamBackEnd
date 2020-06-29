@@ -91,6 +91,12 @@ public class PaperDetailController {
             paperDetail.setExerciseType("简答题");
         }
         paperDetail.setAnswer(answerStr);
+        if(answer2.equals( "这个字段为空")){
+            answer2 = "";
+        }
+        if(answer3.equals( "这个字段为空")){
+            answer3 = "";
+        }
         paperDetail.setAnswer2(answer2);
         paperDetail.setAnswer3(answer3);
         paperDetail.setScore(score);
