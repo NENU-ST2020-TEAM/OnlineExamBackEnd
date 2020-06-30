@@ -1,6 +1,7 @@
 package com.nenusoftware.onlineexam.controller.user;
 
 import com.nenusoftware.onlineexam.entity.user.User;
+import com.nenusoftware.onlineexam.md5util.MD5Util;
 import com.nenusoftware.onlineexam.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -70,7 +71,8 @@ public class UserController {
     @ApiImplicitParam(paramType="login", name = "username", value = "用户名", required = true, dataType = "String")
     public String login(String username, String password, HttpServletRequest request) throws Exception {
         if(userService.queryByName(username) != null){
-            if(userService.checkPassword(username, password).size() != 0){
+            String pwd = MD5Util.string2MD5(password);
+            if(userService.checkPassword(username, pwd).size() != 0){
                 HttpSession session = request.getSession();
                 session.setAttribute("usernameSession",username);
                 System.out.println("登录成功！");
@@ -118,8 +120,9 @@ public class UserController {
     public String register (String username, String password) throws Exception{
         if(userService.queryByName(username) == null){
             User user = new User();
+            String pwd = MD5Util.string2MD5(password);
             user.setUsername(username);
-            user.setPassword(password);
+            user.setPassword(pwd);
             user.setPower(0);
             if(userService.addUser(user)){
                 System.out.println("注册成功！");

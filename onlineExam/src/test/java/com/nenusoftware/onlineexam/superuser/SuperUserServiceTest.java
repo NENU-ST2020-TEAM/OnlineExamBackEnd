@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 /**
  * @author : kongyy
@@ -27,5 +28,12 @@ public class SuperUserServiceTest {
     @Test
     public void testDeleteUser() throws Exception{
         System.out.println(superUserService.deleteUser(5));
+    }
+
+    @Test
+    public void testMd5() throws Exception{
+        String password = "123456";
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+        System.out.println(md5Password);
     }
 }
