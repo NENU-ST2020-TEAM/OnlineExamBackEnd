@@ -1,5 +1,5 @@
 # OnlineExamBackEnd
-Back End of OnlineExamSystem for Software Quality Assurance and Testing course, Spring 2020, NENU
+Back-End of OnlineExamSystem, Software Testing and Quality Assurance course, 2020 Spring, NENU
 
 ## 1 开发环境介绍
 >远程服务器版本：Aliyun云服务器ECS、CentOS 7.3 64位
